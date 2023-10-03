@@ -1,0 +1,32 @@
+.profile-pic{
+  height: 300px;
+  img {
+    height: 100%;
+    border-radius: 100%;
+    border: 1px solid black;
+  }
+}
+
+.change:hover{
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.opacity{
+  opacity: 0.5;
+}
+
+.change-modal{
+  position: absolute;
+  left: 45%;
+  top: 30%;
+  background-color: #cecece;
+  padding: 20px;
+  input{
+    border: none;
+    border-radius: 10px;
+    padding: 8px;
+    outline: none;
+    z-index: 1;
+  }
+}
