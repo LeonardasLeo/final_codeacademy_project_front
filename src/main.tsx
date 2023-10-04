@@ -2,12 +2,12 @@ import * as React from 'react'
 import * as ReactDOM from 'react-dom/client'
 import App from './App'
 import {configureStore} from "@reduxjs/toolkit";
-import userReducer from '../features/users'
+import userReducer from '../features/states'
 import {Provider} from "react-redux";
 
 const store = configureStore({
     reducer: {
-        users: userReducer
+        states: userReducer
     }
 })
 

@@ -1,44 +1,47 @@
 import * as React from 'react';
-import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from "axios";
-import config from "../config";
-import {useRef, useState} from "react";
+import {SetStateAction, useRef, useState} from "react";
 import {AxiosResponses} from "../types";
+import {apiService} from "../api/api";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faTimes} from "@fortawesome/free-solid-svg-icons";
 
-const ChangePasswordModal = () => {
-    const serverRoute: string = config.serverRoute
+type props =  {
+    setIsPasswordBeingChanged: React.Dispatch<SetStateAction<boolean>>
+}
+
+const ChangePasswordModal = ({setIsPasswordBeingChanged}: props) => {
     const passwordOneRef: React.MutableRefObject<HTMLInputElement> = useRef()
     const passwordTwoRef: React.MutableRefObject<HTMLInputElement> = useRef()
     const [error, setError] = useState<string>('')
+    const [success, setSuccess] = useState<string>()
 
-    function changePassword (): void {
+    async function changePassword (): Promise<void> {
         const passwordOne: string = passwordOneRef.current.value
         const passwordTwo: string = passwordTwoRef.current.value
         if (passwordOne === '' || passwordTwo === '') return setError('Please dont leave empty fields')
         if (passwordOne.length < 4) return setError('Password must be longer than 4 letters')
         if (passwordOne.length > 20) return setError('Password cant be longer than 20 letters')
         if (passwordOne !== passwordTwo) return setError('Passwords must match')
-        const options: AxiosRequestConfig = {
-            headers: {
-                'content-type': "application/json",
-                authorization: config.token
-            }
+        const data: AxiosResponses.DefaultResponse = await apiService.changePassword(passwordOne)
+        if (!data.error){
+            setSuccess(data.message)
+            setError('')
+        }else{
+            setError(data.message)
+            setSuccess('')
         }
-        axios.post(`${serverRoute}/changePassword`, {passwordOne}, options)
-            .then((res: AxiosResponse): void => {
-                const data: AxiosResponses.ResponseData = res.data
-                setError(data.message)
-            })
-            .catch((): void => {
-                setError('Error changing password')
-            })
     }
 
     return (
-        <div className='d-flex flex-column gap-3 change-modal'>
+        <div className='d-flex flex-column gap-3 custom-modal'>
+            <div className='d-flex justify-content-end close-btn' onClick={() => setIsPasswordBeingChanged(false)}>
+                <FontAwesomeIcon icon={faTimes}/>
+            </div>
             <input type="text" placeholder='New password' ref={passwordOneRef}/>
             <input type="text" placeholder='Repeat new password' ref={passwordTwoRef}/>
             <button className='btn btn-primary' onClick={changePassword}>Change</button>
-            <div style={{color: error === 'Password changed' ? 'green' : 'red'}}>{error}</div>
+            <div style={{color: 'red'}}>{error}</div>
+            <div style={{color: 'green'}}>{success}</div>
         </div>
     );
 };

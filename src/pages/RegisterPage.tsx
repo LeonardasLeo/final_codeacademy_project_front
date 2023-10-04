@@ -1,24 +1,17 @@
 import * as React from "react";
 import {useRef, useState} from 'react';
 import {NavigateFunction, useNavigate} from "react-router-dom";
-import {AxiosResponses} from "../types";
-import config from '../config'
+import {AxiosResponses, OutgoingDataTypes} from "../types";
+import {apiService} from "../api/api";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
-
-type RegisterData = {
-    username: string,
-    password: string,
-}
 
 const RegisterPage = () => {
-    const serverRoute: string = config.serverRoute
     const nav: NavigateFunction = useNavigate()
     const usernameRef:React.MutableRefObject<HTMLInputElement> = useRef()
     const passwordRef:React.MutableRefObject<HTMLInputElement> = useRef()
     const passwordTwoRef:React.MutableRefObject<HTMLInputElement> = useRef()
     const [error, setError] = useState<string>('')
-    async function register (): Promise<any> {
+    async function register (): Promise<void> {
         const username: string = usernameRef.current.value
         const password: string = passwordRef.current.value
         const passwordTwo: string = passwordTwoRef.current.value
@@ -41,17 +34,11 @@ const RegisterPage = () => {
             }
         }
         if (!doesHaveCapitalLetter) return setError('Password must have at least one capital letter')
-        const user: RegisterData = {
+        const user: OutgoingDataTypes.LoginAndRegData = {
             username,
             password,
         }
-        const options: AxiosRequestConfig = {
-            headers: {
-                'content-type': 'application/json'
-            },
-        }
-        const response: AxiosResponse = await axios.post(`${serverRoute}/register`, user, options)
-        const data: AxiosResponses.ResponseData = response.data
+        const data: AxiosResponses.DefaultResponse = await apiService.register(user)
         if (!data.error) nav('/login')
         else setError(data.message)
     }

@@ -7,16 +7,16 @@ import ChangePictureModal from "../modals/ChangePictureModal";
 import '../App.css'
 
 const ProfilePage = () => {
-    const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxUsers) => state.users.user)
+    const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
     const [isPasswordBeingChanged, setIsPasswordBeingChanged] = useState<boolean>(false)
     const [isPictureBeingChanged, setIsPictureBeingChanged] = useState<boolean>(false)
     return (
         <div>
             {user &&
                 <div className='p-3'>
-                    {isPasswordBeingChanged && <ChangePasswordModal/>}
-                    {isPictureBeingChanged && <ChangePictureModal/>}
-                    <div className={`d-flex align-items-center gap-4 ${isPictureBeingChanged || isPasswordBeingChanged && 'opacity'}`}>
+                    {isPasswordBeingChanged && <ChangePasswordModal setIsPasswordBeingChanged={setIsPasswordBeingChanged}/>}
+                    {isPictureBeingChanged && <ChangePictureModal setIsPictureBeingChanged={setIsPictureBeingChanged}/>}
+                    <div className={`d-flex align-items-center gap-4 ${(isPictureBeingChanged || isPasswordBeingChanged) && 'opacity events-none'}`}>
                         <div className='profile-pic'>
                             <img src={user.profilePic} alt=""/>
                         </div>

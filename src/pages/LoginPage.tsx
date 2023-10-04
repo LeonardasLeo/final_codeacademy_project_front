@@ -1,20 +1,13 @@
 import * as React from "react";
 import {useRef, useState} from 'react';
 import {NavigateFunction, useNavigate} from "react-router-dom";
-import config from "../config";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import {AxiosResponses} from "../types";
+import {AxiosResponses, OutgoingDataTypes,} from "../types";
 import {useDispatch} from "react-redux";
-import {updateUser} from "../../features/users";
-import axios, {AxiosPromise, AxiosRequestConfig, AxiosResponse} from "axios";
-
-type LoginData = {
-    username: string,
-    password: string
-}
+import {updateAllPosts, updateAllUsers, updateUser} from "../../features/states";
+import {apiService} from "../api/api";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginPage = () => {
-    const serverRoute: string = config.serverRoute
     const nav: NavigateFunction = useNavigate()
     const dispatch = useDispatch()
     const usernameRef:React.MutableRefObject<HTMLInputElement>= useRef()
@@ -26,26 +19,21 @@ const LoginPage = () => {
         const password: string = passwordRef.current.value
         if (username === '') return setError('Please enter username')
         if (password === '') return setError('Please enter password')
-        const user: LoginData = {
+        const user: OutgoingDataTypes.LoginAndRegData = {
             username: usernameRef.current.value,
             password: passwordRef.current.value
         }
-        const options: AxiosRequestConfig = {
-            headers: {
-                'content-type': 'application/json'
-            }
-        }
-        const response: AxiosResponse = await axios.post(`${serverRoute}/login`, user, options)
-        const data: AxiosResponses.LoginData = response.data
+        const data: AxiosResponses.LoginData = await apiService.login(user)
         if (!data.error){
             nav('/profile')
             dispatch(updateUser(data.data.user))
+            dispatch(updateAllPosts(data.data.allPosts))
+            dispatch(updateAllUsers(data.data.allUsers))
             if (autoLogin){
                 localStorage.setItem('token', data.data.token)
             }else{
                 sessionStorage.setItem('token', data.data.token)
             }
-            config.token = localStorage.getItem('token') || sessionStorage.getItem('token')
         }else{
             setError(data.message)
         }

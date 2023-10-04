@@ -1,8 +1,11 @@
 .profile-pic {
   height: 300px;
+  width: 300px;
 }
 .profile-pic img {
   height: 100%;
+  width: 100%;
+  object-fit: cover;
   border-radius: 100%;
   border: 1px solid black;
 }
@@ -16,19 +19,105 @@
   opacity: 0.5;
 }
 
-.change-modal {
+.custom-modal {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   position: absolute;
   left: 45%;
   top: 30%;
   background-color: #cecece;
   padding: 20px;
+  z-index: 1;
 }
-.change-modal input {
+.custom-modal input {
   border: none;
   border-radius: 10px;
   padding: 8px;
   outline: none;
-  z-index: 1;
+}
+
+.reaction-and-count {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.reaction:hover {
+  cursor: pointer;
+  color: silver;
+}
+
+.events-none {
+  pointer-events: none;
+}
+
+.post-image {
+  height: 250px;
+  object-fit: cover;
+  object-position: center;
+}
+
+.user-card {
+  display: flex;
+  gap: 10px;
+  height: 100px;
+  width: 100%;
+  padding: 10px;
+  background-color: #cecece;
+  border-radius: 10px;
+}
+.user-card img {
+  height: 100%;
+}
+
+.close-btn {
+  cursor: pointer;
+}
+
+.message {
+  background-color: #cecece;
+  padding: 10px;
+  border-radius: 10px;
+  width: fit-content;
+}
+.message div:first-of-type {
+  font-size: 12px;
+}
+
+.message-display {
+  background-color: gray;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  height: 70vh;
+}
+
+.toolbar {
+  display: flex;
+}
+.toolbar input {
+  width: 100%;
+  border: none;
+  outline: none;
+  background-color: #d7d7d7;
+  border-radius: 0 0 0 10px;
+  padding: 10px;
+}
+
+.send-button {
+  border-radius: 0 0 10px 0;
+  background-color: #4040fa;
+  border: none;
+  color: white;
+  padding: 0 20px 0 20px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-4 {
+  flex: 4;
 }
 
 /*# sourceMappingURL=App.css.map */

@@ -1,39 +1,49 @@
+import * as React from "react";
 import {BrowserRouter, NavigateFunction, Route, Routes, useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import {AxiosResponses, SocketType, UserTypes} from "./types";
+import {useDispatch} from "react-redux";
+import {updateAllPosts, updateAllUsers, updateUser} from "../features/states";
+import {apiService} from "./api/api";
+import { io } from "socket.io-client";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
-import * as React from "react";
 import ProfilePage from "./pages/ProfilePage";
-import config from "./config";
 import Navbar from "./components/Navbar";
-import {useEffect} from "react";
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
-import {AxiosResponses, UserTypes} from "./types";
-import {useDispatch} from "react-redux";
-import {updateUser} from "../features/users";
+import PostPage from "./pages/PostPage";
+import config from "../config";
+import UserPage from "./pages/UserPage";
+import MessagePage from "./pages/MessagePage";
 
-async function getUserData (token): Promise<UserTypes.User> {
-    const options: AxiosRequestConfig = {
-        headers: {
-            authorization: token
-        }
+export const socket: SocketType = io(config.serverRoute, {
+    autoConnect: true,
+    query: {
+        token: config.token
     }
-    const response: AxiosResponse = await axios.get(`${config.serverRoute}/getUserData`, options)
-    const data: AxiosResponses.UserData = response.data
-    return data.data
-}
+});
 
 function Root(): React.JSX.Element {
     const dispatch = useDispatch()
     const nav: NavigateFunction = useNavigate()
-    const token: string = localStorage.getItem('token') || sessionStorage.getItem('token')
-    useEffect(() => {
-        if (token){
-            config.token = token
-            getUserData(token)
-                .then((data: UserTypes.User): void => {
-                    dispatch(updateUser(data))
+    const JwtToken: string = localStorage.getItem('token') || sessionStorage.getItem('token')
+    const [error, setError] = useState<string>('')
+    useEffect((): void => {
+        if (JwtToken){
+            apiService.getUserData()
+                .then((res: AxiosResponses.UserData): void => {
+                    if (!res.error){
+                        dispatch(updateUser(res.data.user))
+                        dispatch(updateAllUsers(res.data.allUsers))
+                        dispatch(updateAllPosts(res.data.allPosts))
+                    }else{
+                        setError(res.message)
+                    }
                 })
-                .catch((e: Error) => console.log(e))
+                .catch(e => console.log('Error getting user'))
+            socket.on('updatePosts', (val: UserTypes.Post[]): void => {
+                dispatch(updateAllPosts(val))
+            })
+            setError('')
             return nav('/profile')
         }else{
             return nav('/login')
@@ -44,10 +54,14 @@ function Root(): React.JSX.Element {
     <div>
         {/*{token && <div>toolbar</div>}*/}
         <Navbar/>
+        {error && <div>{error}</div>}
         <Routes>
             <Route path='/' element={<RegisterPage/>}/>
             <Route path='/login' element={<LoginPage/>}/>
             <Route path='/profile' element={<ProfilePage/>}/>
+            <Route path='/posts' element={<PostPage/>}/>
+            <Route path='/users' element={<UserPage/>}/>
+            <Route path='/messages' element={<MessagePage/>}/>
         </Routes>
     </div>
   )
