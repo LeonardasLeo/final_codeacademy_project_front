@@ -2,15 +2,15 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {UserTypes} from "../src/types";
 
 type InitialType = {
-    user?: UserTypes.User,
-    allPosts?: UserTypes.Post[],
+    user?: UserTypes.User
+    allPosts?: UserTypes.Post[]
     allUsers?: UserTypes.User[]
 }
 
 const initialState: InitialType = {
     user: undefined,
     allPosts: undefined,
-    allUsers: undefined
+    allUsers: undefined,
 }
 
 const statesSlice = createSlice({
@@ -25,13 +25,13 @@ const statesSlice = createSlice({
         },
         updateAllUsers: (state, action: PayloadAction<UserTypes.User[]>): void => {
             state.allUsers = action.payload
-        }
+        },
     }
 })
 
 export const {
     updateUser,
     updateAllPosts,
-    updateAllUsers
+    updateAllUsers,
 } = statesSlice.actions
 export default statesSlice.reducer

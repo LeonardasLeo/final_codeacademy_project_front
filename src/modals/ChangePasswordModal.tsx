@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {SetStateAction, useRef, useState} from "react";
-import {AxiosResponses} from "../types";
+import {IncomingDataTypes} from "../types";
 import {apiService} from "../api/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
@@ -22,7 +22,7 @@ const ChangePasswordModal = ({setIsPasswordBeingChanged}: props) => {
         if (passwordOne.length < 4) return setError('Password must be longer than 4 letters')
         if (passwordOne.length > 20) return setError('Password cant be longer than 20 letters')
         if (passwordOne !== passwordTwo) return setError('Passwords must match')
-        const data: AxiosResponses.DefaultResponse = await apiService.changePassword(passwordOne)
+        const data: IncomingDataTypes.DefaultResponse = await apiService.changePassword(passwordOne)
         if (!data.error){
             setSuccess(data.message)
             setError('')

@@ -1,59 +1,63 @@
-import axios, {AxiosRequestConfig, AxiosResponse} from "axios";
-import {AxiosResponses, OutgoingDataTypes} from "../types";
+import axios, {AxiosResponse} from "axios";
+import {IncomingDataTypes, OutgoingDataTypes, UserTypes} from "../types";
 import config from "../../config.ts";
 
-const serverRoute: string = config.serverRoute
-const requestConfig: AxiosRequestConfig = {
-    headers: {
-        'content-type': 'application/json'
-    }
+const getToken: () => string | null = () => {
+    return config.token
 }
-const requestConfigWithAuth: AxiosRequestConfig = {
-    headers: {
-        'content-type': "application/json",
-        authorization: config.token
-    }
-}
+
+axios.defaults.baseURL = 'http://localhost:3001'
+axios.defaults.headers.post['content-type'] = 'application/json'
+axios.defaults.headers.common['Authorization'] = getToken()
+
+// function to get latest token value
+
+
 
 export const apiService = {
-    async login(user: OutgoingDataTypes.LoginAndRegData): Promise<AxiosResponses.LoginData> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/login`, user, requestConfig)
+    async login(user: OutgoingDataTypes.LoginAndRegData): Promise<IncomingDataTypes.LoginData> {
+        const response: AxiosResponse = await axios.post(`/login`, user)
         return response.data
     },
-    async register(user: OutgoingDataTypes.LoginAndRegData): Promise <AxiosResponses.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/register`, user, requestConfig)
+    async register(user: OutgoingDataTypes.LoginAndRegData): Promise <IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post(`/register`, user)
         return response.data
     },
-    async getUserData (): Promise<AxiosResponses.UserData> {
-        const response: AxiosResponse = await axios.get(`${serverRoute}/getUserData`, requestConfigWithAuth)
+    async getUserData (): Promise<IncomingDataTypes.AllUserData> {
+        const response: AxiosResponse = await axios.get(`/getUserData`)
         return response.data
     },
-    async changePassword(passwordOne: string): Promise<AxiosResponses.DefaultResponse>{
-        const response: AxiosResponse = await axios.post(`${serverRoute}/changePassword`, {passwordOne}, requestConfigWithAuth)
+    async changePassword(passwordOne: string): Promise<IncomingDataTypes.DefaultResponse>{
+        const response: AxiosResponse = await axios.post(`/changePassword`, {passwordOne})
         return response.data
     },
-    async changeProfilePicture(image: string): Promise<AxiosResponses.UserData> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/changeProfilePic`, {image}, requestConfigWithAuth)
+    async changeProfilePicture(image: string): Promise<IncomingDataTypes.CurrentUserData> {
+        const response: AxiosResponse = await axios.post(`/changeProfilePic`, {image})
         return response.data
     },
-    async addPost(data: OutgoingDataTypes.PostData): Promise<AxiosResponses.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/addPost`, data, requestConfigWithAuth)
+    async addPost(data: OutgoingDataTypes.PostData): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post(`/addPost`, data)
         return response.data
     },
-    async likePost(id: string): Promise<AxiosResponses.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/likePost`, {id}, requestConfigWithAuth)
+    async likePost(id: string): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post(`/likePost`, {id})
         return response.data
     },
-    async dislikePost(id: string): Promise<AxiosResponses.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/dislikePost`, {id}, requestConfigWithAuth)
+    async dislikePost(id: string): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post(`/dislikePost`, {id})
         return response.data
     },
-    async sendMessage(messageValue: string, to: string): Promise<AxiosResponses.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`${serverRoute}/sendMessage`, {messageValue, to}, requestConfigWithAuth)
-        console.log(config.token)
+    async sendMessage(messageValue: string, to: UserTypes.User): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post(`/sendMessage`, {messageValue, to})
+        return response.data
+    },
+    async getSinglePost(id: string): Promise<IncomingDataTypes.PostData> {
+        const response: AxiosResponse = await axios.post('/getSinglePost', {id})
+        return response.data
+    },
+    async getSingleUser(username: string): Promise<IncomingDataTypes.CurrentUserData> {
+        const response: AxiosResponse = await axios.post('/getSingleUser', {username})
         return response.data
     }
-
-
 }
 

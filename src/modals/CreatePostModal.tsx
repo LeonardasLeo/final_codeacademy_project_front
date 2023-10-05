@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {SetStateAction, useRef, useState} from "react";
-import {AxiosResponses, OutgoingDataTypes} from "../types";
+import {IncomingDataTypes, OutgoingDataTypes} from "../types";
 import {apiService} from "../api/api";
 import {useDispatch} from "react-redux";
 import {updateAllPosts} from "../../features/states";
@@ -25,7 +25,7 @@ const CreatePostModal = ({setIsCreatePost}: props) => {
             title,
             image
         }
-        const response: AxiosResponses.DefaultResponse = await apiService.addPost(post)
+        const response: IncomingDataTypes.DefaultResponse = await apiService.addPost(post)
         if (!response.error){
             socket.emit('postAdded')
             dispatch(updateAllPosts(response.data))

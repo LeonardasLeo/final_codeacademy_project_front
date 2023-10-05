@@ -5,7 +5,7 @@ import {configureStore} from "@reduxjs/toolkit";
 import userReducer from '../features/states'
 import {Provider} from "react-redux";
 
-const store = configureStore({
+export const store = configureStore({
     reducer: {
         states: userReducer
     }

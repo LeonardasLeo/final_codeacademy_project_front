@@ -1,7 +1,7 @@
 import {Socket} from "socket.io-client";
 
 export type Config = {
-    serverRoute: string
+    serverRoute: string,
     token: string | null
 }
 
@@ -27,11 +27,13 @@ export namespace UserTypes{
     }
     export type Post = {
         _id: string
+        username: string
         image: string
         title: string
         likes: number
         dislikes: number
         comments: Comment[]
+        timestamp: Date
     }
     export type User = {
         _id: string
@@ -55,12 +57,26 @@ export namespace ReduxTypes {
     }
 }
 
-export namespace AxiosResponses {
+export namespace IncomingDataTypes {
     export type DefaultResponse = {
         error: boolean
         message: string | null
         data: null
     }
+
+    export type UpdateUserData = {
+        userOne: UserTypes.User
+        userTwo: UserTypes.User
+    }
+
+    export interface CurrentUserData extends DefaultResponse{
+        data: UserTypes.User
+    }
+
+    export interface PostData extends DefaultResponse{
+        data: UserTypes.Post
+    }
+
     export interface LoginData extends DefaultResponse {
         data: {
             user: UserTypes.User
@@ -69,7 +85,7 @@ export namespace AxiosResponses {
             allUsers: UserTypes.User[]
         }
     }
-    export interface UserData extends DefaultResponse {
+    export interface AllUserData extends DefaultResponse {
         data: {
             user: UserTypes.User
             allPosts: UserTypes.Post[]

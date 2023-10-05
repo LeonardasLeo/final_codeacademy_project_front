@@ -8,7 +8,7 @@ import MessageModal from "../modals/MessageModal";
 const UserPage = () => {
     const allUsers: UserTypes.User[] = useSelector((state: ReduxTypes.ReduxStates) => state.states.allUsers)
     const [isMessage, setIsMessage] = useState<boolean>(false)
-    const [messageTo, setMessageTo] = useState<string>('')
+    const [messageTo, setMessageTo] = useState<UserTypes.User>(undefined)
 
     return (
         <div>
@@ -16,7 +16,7 @@ const UserPage = () => {
             <div className={`d-flex gap-3 flex-wrap p-5 ${isMessage && 'opacity events-none'}`}>
                 {allUsers &&
                     allUsers.map((item: UserTypes.User) =>
-                        <SingleUserInUsers item={item} setIsMessage={setIsMessage} setMessageTo={setMessageTo}/>
+                        <SingleUserInUsers key={item._id} item={item} setIsMessage={setIsMessage} setMessageTo={setMessageTo}/>
                     )
                 }
             </div>

@@ -1,7 +1,7 @@
 import * as React from "react";
 import {useRef, useState} from 'react';
 import {NavigateFunction, useNavigate} from "react-router-dom";
-import {AxiosResponses, OutgoingDataTypes} from "../types";
+import {IncomingDataTypes, OutgoingDataTypes} from "../types";
 import {apiService} from "../api/api";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -38,22 +38,22 @@ const RegisterPage = () => {
             username,
             password,
         }
-        const data: AxiosResponses.DefaultResponse = await apiService.register(user)
+        const data: IncomingDataTypes.DefaultResponse = await apiService.register(user)
         if (!data.error) nav('/login')
         else setError(data.message)
     }
 
     return (
         <div className='p-3'>
-            <div>
-                <button className='btn btn-dark' onClick={() => nav('/login')}>Login</button>
+            <div className='d-flex'>
+                <div className='default-button' onClick={() => nav('/login')}>Login</div>
             </div>
-            <div className='d-flex flex-column gap-1 p-5'>
+            <div className='p-5'>
                 <div className='d-flex flex-column gap-2 mt-3'>
                     <input type="text" placeholder='Username' ref={usernameRef}/>
                     <input type="text" placeholder='Password' ref={passwordRef}/>
                     <input type="text" placeholder='Repeat password' ref={passwordTwoRef}/>
-                    <button className='btn btn-primary' onClick={register}>Register</button>
+                    <div className='default-button' onClick={register}>Register</div>
                     <div style={{color: 'red'}}><b>{error}</b></div>
                 </div>
             </div>

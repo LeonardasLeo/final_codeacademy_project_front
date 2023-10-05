@@ -13,7 +13,7 @@ const ProfilePage = () => {
     return (
         <div>
             {user &&
-                <div className='p-3'>
+                <div className='p-3 profile-page'>
                     {isPasswordBeingChanged && <ChangePasswordModal setIsPasswordBeingChanged={setIsPasswordBeingChanged}/>}
                     {isPictureBeingChanged && <ChangePictureModal setIsPictureBeingChanged={setIsPictureBeingChanged}/>}
                     <div className={`d-flex align-items-center gap-4 ${(isPictureBeingChanged || isPasswordBeingChanged) && 'opacity events-none'}`}>

@@ -1,11 +1,12 @@
 import * as React from "react";
 import {useRef, useState} from 'react';
 import {NavigateFunction, useNavigate} from "react-router-dom";
-import {AxiosResponses, OutgoingDataTypes,} from "../types";
+import {IncomingDataTypes, OutgoingDataTypes,} from "../types";
 import {useDispatch} from "react-redux";
 import {updateAllPosts, updateAllUsers, updateUser} from "../../features/states";
 import {apiService} from "../api/api";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import config from "../../config";
 
 const LoginPage = () => {
     const nav: NavigateFunction = useNavigate()
@@ -23,9 +24,10 @@ const LoginPage = () => {
             username: usernameRef.current.value,
             password: passwordRef.current.value
         }
-        const data: AxiosResponses.LoginData = await apiService.login(user)
+        const data: IncomingDataTypes.LoginData = await apiService.login(user)
         if (!data.error){
             nav('/profile')
+            config.token = data.data.token
             dispatch(updateUser(data.data.user))
             dispatch(updateAllPosts(data.data.allPosts))
             dispatch(updateAllUsers(data.data.allUsers))
@@ -40,16 +42,16 @@ const LoginPage = () => {
     }
     return (
         <div className='p-3'>
-            <div>
-                <button className='btn btn-secondary' onClick={() => nav('/')}>Register</button>
+            <div className='d-flex'>
+                <div className='default-button' onClick={() => nav('/')}>Register</div>
             </div>
             <div className='d-flex flex-column gap-2 p-5'>
                 <input type="text" placeholder='Username' ref={usernameRef}/>
                 <input type="text" placeholder='Password' ref={passwordRef}/>
-                <div>
+                <div className='auto-login'>
                     <input type="checkbox" onChange={() => setAutoLogin(!autoLogin)}/> Keep me logged in
                 </div>
-                <button className='btn btn-primary' onClick={login}>Login</button>
+                <div className='default-button' onClick={login}>Login</div>
                 <div style={{color: 'red'}}><b>{error}</b></div>
             </div>
         </div>
