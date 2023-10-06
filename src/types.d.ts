@@ -24,6 +24,7 @@ export namespace UserTypes{
         comment: string
         likes: number
         dislikes: number
+        timestamp: Date
     }
     export type Post = {
         _id: string
@@ -69,7 +70,7 @@ export namespace IncomingDataTypes {
         userTwo: UserTypes.User
     }
 
-    export interface CurrentUserData extends DefaultResponse{
+    export interface UserData extends DefaultResponse{
         data: UserTypes.User
     }
 

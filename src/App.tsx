@@ -11,7 +11,7 @@ import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/Navbar";
 import PostPage from "./pages/PostPage";
-import config from "../config";
+import config, {getToken} from "../config";
 import UserPage from "./pages/UserPage";
 import MessagePage from "./pages/MessagePage";
 import {store} from "./main";
@@ -19,9 +19,6 @@ import SinglePostPage from "./pages/SinglePostPage";
 
 export const socket: SocketType = io(config.serverRoute, {
     autoConnect: true,
-    query:{
-        token: config.token
-    }
 });
 
 function Root(): React.JSX.Element {
@@ -35,6 +32,7 @@ function Root(): React.JSX.Element {
                 .then((res: IncomingDataTypes.AllUserData): void => {
                     if (!res.error){
                         config.token = jwtToken
+                        socket.emit('userConnected', getToken())
                         dispatch(updateUser(res.data.user))
                         dispatch(updateAllUsers(res.data.allUsers))
                         dispatch(updateAllPosts(res.data.allPosts))

@@ -1,18 +1,21 @@
 import axios, {AxiosResponse} from "axios";
 import {IncomingDataTypes, OutgoingDataTypes, UserTypes} from "../types";
-import config from "../../config.ts";
+import config, {getToken} from "../../config.ts";
 
-const getToken: () => string | null = () => {
-    return config.token
-}
 
-axios.defaults.baseURL = 'http://localhost:3001'
+
+axios.defaults.baseURL = config.serverRoute
 axios.defaults.headers.post['content-type'] = 'application/json'
-axios.defaults.headers.common['Authorization'] = getToken()
 
 // function to get latest token value
 
-
+const getAuthorization = (): {headers: {authorization: string | null}} => {
+    return {
+        headers: {
+            authorization: getToken()
+        }
+    }
+}
 
 export const apiService = {
     async login(user: OutgoingDataTypes.LoginAndRegData): Promise<IncomingDataTypes.LoginData> {
@@ -24,39 +27,43 @@ export const apiService = {
         return response.data
     },
     async getUserData (): Promise<IncomingDataTypes.AllUserData> {
-        const response: AxiosResponse = await axios.get(`/getUserData`)
+        const response: AxiosResponse = await axios.get(`/getUserData`, getAuthorization())
         return response.data
     },
     async changePassword(passwordOne: string): Promise<IncomingDataTypes.DefaultResponse>{
-        const response: AxiosResponse = await axios.post(`/changePassword`, {passwordOne})
+        const response: AxiosResponse = await axios.post(`/changePassword`, {passwordOne}, getAuthorization())
         return response.data
     },
-    async changeProfilePicture(image: string): Promise<IncomingDataTypes.CurrentUserData> {
-        const response: AxiosResponse = await axios.post(`/changeProfilePic`, {image})
+    async changeProfilePicture(image: string): Promise<IncomingDataTypes.UserData> {
+        const response: AxiosResponse = await axios.post(`/changeProfilePic`, {image}, getAuthorization())
         return response.data
     },
     async addPost(data: OutgoingDataTypes.PostData): Promise<IncomingDataTypes.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`/addPost`, data)
+        const response: AxiosResponse = await axios.post(`/addPost`, data, getAuthorization())
         return response.data
     },
     async likePost(id: string): Promise<IncomingDataTypes.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`/likePost`, {id})
+        const response: AxiosResponse = await axios.post(`/likePost`, {id}, getAuthorization())
         return response.data
     },
     async dislikePost(id: string): Promise<IncomingDataTypes.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`/dislikePost`, {id})
+        const response: AxiosResponse = await axios.post(`/dislikePost`, {id}, getAuthorization())
         return response.data
     },
     async sendMessage(messageValue: string, to: UserTypes.User): Promise<IncomingDataTypes.DefaultResponse> {
-        const response: AxiosResponse = await axios.post(`/sendMessage`, {messageValue, to})
+        const response: AxiosResponse = await axios.post(`/sendMessage`, {messageValue, to}, getAuthorization())
         return response.data
     },
     async getSinglePost(id: string): Promise<IncomingDataTypes.PostData> {
-        const response: AxiosResponse = await axios.post('/getSinglePost', {id})
+        const response: AxiosResponse = await axios.post('/getSinglePost', {id}, getAuthorization())
         return response.data
     },
-    async getSingleUser(username: string): Promise<IncomingDataTypes.CurrentUserData> {
-        const response: AxiosResponse = await axios.post('/getSingleUser', {username})
+    async getSingleUser(username: string): Promise<IncomingDataTypes.UserData> {
+        const response: AxiosResponse = await axios.post('/getSingleUser', {username}, getAuthorization())
+        return response.data
+    },
+    async comment(comment: UserTypes.Comment): Promise<IncomingDataTypes.UserData> {
+        const response: AxiosResponse = await axios.post('/comment', {comment}, getAuthorization())
         return response.data
     }
 }

@@ -23,7 +23,7 @@ const ChangePictureModal = ({setIsPictureBeingChanged}: props) => {
     async function changePicture (): Promise<void> {
         const imageLink: string = imageRef.current.value
         if (imageLink === '') return setError('Please enter an image link')
-        const data: IncomingDataTypes.CurrentUserData = await apiService.changeProfilePicture(imageLink)
+        const data: IncomingDataTypes.UserData = await apiService.changeProfilePicture(imageLink)
         if (!data.error){
             dispatch(updateUser(data.data))
             socket.emit('profilePictureChanged')

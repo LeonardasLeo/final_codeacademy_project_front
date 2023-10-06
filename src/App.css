@@ -33,6 +33,7 @@ body input {
   background-color: var(--blue);
   padding: 10px;
   color: var(--white-white);
+  cursor: pointer;
 }
 
 .nav-button, .logout, .username-display {
@@ -138,7 +139,7 @@ body input {
   text-align: center;
 }
 
-.default-button {
+.default-button:hover {
   transition: 0.3s;
   background-color: var(--darker-blue);
 }
@@ -188,15 +189,59 @@ body input {
   overflow: auto;
 }
 
-.message-display::-webkit-scrollbar {
+.single-post-image {
+  max-height: 500px;
+}
+.single-post-image img {
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.comment-container {
+  height: 250px;
+  background-color: var(--gray);
+  border-radius: 10px 10px 0 0;
+  overflow: auto;
+}
+
+.comment-field {
+  display: flex;
+}
+.comment-field input {
+  width: 100%;
+  border-radius: 0 0 0 10px;
+}
+.comment-field div {
+  border-radius: 0 0 10px 0;
+}
+
+.single-post-like-display {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  color: var(--white-text);
+}
+.single-post-like-display .default-button {
+  width: 100%;
+}
+
+.single-post-title {
+  color: var(--white-text);
+  font-size: 30px;
+}
+
+.message-display::-webkit-scrollbar, .comment-container::-webkit-scrollbar {
   width: 10px;
 }
 
-.message-display::-webkit-scrollbar-track {
+.message-display::-webkit-scrollbar-track, .comment-container::-webkit-scrollbar {
   background: transparent;
 }
 
-.message-display::-webkit-scrollbar-thumb {
+.message-display::-webkit-scrollbar-thumb, .comment-container::-webkit-scrollbar {
   background: var(--black);
   border-radius: 10px;
 }
@@ -236,7 +281,6 @@ body input {
   position: absolute;
   top: 105%;
   left: 0;
-  left: 0;
 }
 .custom-dropdown div {
   padding: 5px 10px;
@@ -250,10 +294,6 @@ body input {
 }
 .custom-dropdown div:last-of-type:hover {
   border-radius: 0 0 10px 10px;
-}
-
-.single-post-image img {
-  width: 100%;
 }
 
 .flex-1 {

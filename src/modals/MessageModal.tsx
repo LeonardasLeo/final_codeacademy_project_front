@@ -24,6 +24,7 @@ const MessageModal = ({to, setIsMessage}: props) => {
         if (!response.error){
             const roomName: string = `${user.username}-${to.username}-room`
             socket.emit('requestJoinRoomFromClient', {roomName, userOne: user, userTwo: to})
+            socket.emit('sendMessage', {roomName, userOne: user, userTwo: to})
             setSuccess(response.message)
             setError('')
         }else{
@@ -37,7 +38,7 @@ const MessageModal = ({to, setIsMessage}: props) => {
             <div className='d-flex justify-content-end close-btn' onClick={() => setIsMessage(false)}>
                 <FontAwesomeIcon icon={faTimes}/>
             </div>
-            <input type="text" placeholder='Title' ref={messageRef}/>
+            <input type="text" placeholder='Message' ref={messageRef}/>
             <button className='btn btn-primary' onClick={sendMessage}>Send message</button>
             <div style={{color: 'red'}}>{error}</div>
             <div style={{color: 'green'}}>{success}</div>

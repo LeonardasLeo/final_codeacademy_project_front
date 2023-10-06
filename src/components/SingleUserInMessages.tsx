@@ -17,6 +17,7 @@ const SingleUserInMessages = ({item, selectedUser,setSelectedUser}: props) => {
         const roomName: string = `${user.username}-${item.username}-room`
         socket.emit('requestJoinRoomFromClient', {roomName, userOne: user, userTwo: item})
     }
+
     return (
         <div className={`user-card ${item.username === selectedUser?.username && 'selected-user-card'}`} onClick={() => {
             setSelectedUser(item)

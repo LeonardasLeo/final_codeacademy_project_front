@@ -6,7 +6,8 @@ import {useDispatch} from "react-redux";
 import {updateAllPosts, updateAllUsers, updateUser} from "../../features/states";
 import {apiService} from "../api/api";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import config from "../../config";
+import config, {getToken} from "../../config";
+import {socket} from "../App";
 
 const LoginPage = () => {
     const nav: NavigateFunction = useNavigate()
@@ -28,6 +29,7 @@ const LoginPage = () => {
         if (!data.error){
             nav('/profile')
             config.token = data.data.token
+            socket.emit('userConnected', getToken())
             dispatch(updateUser(data.data.user))
             dispatch(updateAllPosts(data.data.allPosts))
             dispatch(updateAllUsers(data.data.allUsers))
