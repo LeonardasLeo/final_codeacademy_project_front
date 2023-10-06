@@ -77,7 +77,7 @@ const SinglePostPage = () => {
     }
     return (
         <div>
-            {post && user ?
+            {post && user &&
                 <div className='p-5 d-flex flex-column gap-3'>
                     <div className='flex-1 d-flex gap-3'>
                         <div className='single-post-image flex-1'>
@@ -107,8 +107,7 @@ const SinglePostPage = () => {
                             <div className='default-button' onClick={comment}>Comment</div>
                         </div>
                     </div>
-                </div> :
-                <div className='loading'>Loading...</div>
+                </div>
             }
             <div className='error'>{error}</div>
         </div>
