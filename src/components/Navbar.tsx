@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useState} from "react";
 import {NavigateFunction, useNavigate} from "react-router-dom";
 import {ReduxTypes, UserTypes} from "../types";
@@ -9,7 +8,7 @@ const Navbar = () => {
     const buttons: string[] = ['Profile', 'Messages', 'Posts', 'Users']
     const [selectedButton, setSelectedButton] = useState<string>('Profile')
     const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
-    function buttonClicked (item): void{
+    function buttonClicked (item: string): void{
         nav(`/${item}`)
         setSelectedButton(item)
     }

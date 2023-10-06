@@ -5,15 +5,19 @@ import {apiService} from "../api/api";
 import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
 import SingleUserInPost from "../components/SingleUserInPost";
 import {useSelector} from "react-redux";
+import Comment from "../components/Comment.tsx";
+import {emitPostInteraction} from "../api/sockets.ts";
 
 const SinglePostPage = () => {
     const {id} = useParams()
     const commentRef: React.MutableRefObject<HTMLInputElement> = useRef()
-    const [error, setError] = useState<string>('')
+    const commentContainerRef: React.MutableRefObject<HTMLDivElement> = useRef()
     const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
+    const [error, setError] = useState<string>('')
     const [post, setPost] = useState<UserTypes.Post | undefined>(undefined)
     const [userWhoPosted, setUserWhoPosted] = useState<UserTypes.User | undefined>(undefined)
-    useEffect(() => {
+    const allPosts: UserTypes.Post[] = useSelector((state: ReduxTypes.ReduxStates) => state.states.allPosts)
+    useEffect((): void => {
         apiService.getSinglePost(id)
             .then((res: IncomingDataTypes.PostData) => {
                 if (!res.error){
@@ -22,11 +26,10 @@ const SinglePostPage = () => {
                     setError(res.message)
                 }
             })
+    }, [id, allPosts])
 
-    }, [id])
-    useEffect(() => {
+    useEffect((): void => {
         if (post){
-            console.log(post.username)
             apiService.getSingleUser(post.username)
                 .then((res: IncomingDataTypes.UserData) => {
                     if (!res.error){
@@ -35,21 +38,38 @@ const SinglePostPage = () => {
                         setError(res.message)
                     }
                 })
+            if (post && commentContainerRef.current){
+                commentContainerRef.current.scrollTop = commentContainerRef.current.scrollHeight;
+            }
         }
     }, [post])
 
-     async function comment () {
+    async function likePost (): Promise<void> {
+        const response:IncomingDataTypes.DefaultResponse = await apiService.likePost(post._id)
+        if (!response.error){
+            emitPostInteraction()
+            setError('')
+        }
+    }
+
+     async function comment (): Promise<void> {
         const commentValue: string = commentRef.current.value
          if (commentValue === '') return setError('Please enter comment')
         const comment: UserTypes.Comment = {
+             id: Math.random(),
             username: user.username,
             comment: commentValue,
-            likes: 0,
-            dislikes: 0,
+            likes: [],
+            dislikes: [],
             timestamp: new Date()
         }
-        const response = await apiService.comment(comment)
-         console.log(response)
+        const response: IncomingDataTypes.UserData = await apiService.comment(comment, post._id)
+         if (!response.error){
+             emitPostInteraction()
+             setError('')
+         }else{
+             setError(response.message)
+         }
     }
     function formatTimestamp(timestamp: Date): string {
         const date: Date = new Date(timestamp)
@@ -68,19 +88,18 @@ const SinglePostPage = () => {
                                 <SingleUserInPost item={userWhoPosted}/>
                                 <div className='mt-3 single-post-title'>{post.title}</div>
                             </div>
-                            <div>
-                                <div className='likes'>{post.likes} likes</div>
-                                <div className='likes'>{post.dislikes} dislikes</div>
+                            <div className='single-post-data white-text'>
+                                <div className='likes'>{post.likes.length} likes</div>
+                                <div className='likes'>{post.dislikes.length} dislikes</div>
                                 <div>Posted on: {formatTimestamp(post.timestamp)}</div>
                             </div>
-                            <div className='default-button'>Like</div>
+                            <div className='default-button' onClick={likePost}>Like</div>
                         </div>
                     </div>
                     <div className='flex-1 d-flex flex-column'>
-                        <div className='comment-container'>
-                            d
+                        <div className='comment-container' ref={commentContainerRef}>
                             {post.comments.map((item: UserTypes.Comment) =>
-                                <div>{item.comment}</div>
+                                <Comment key={item.id} item={item}/>
                             )}
                         </div>
                         <div className='comment-field'>
@@ -89,9 +108,9 @@ const SinglePostPage = () => {
                         </div>
                     </div>
                 </div> :
-                <div>Loading...</div>
+                <div className='loading'>Loading...</div>
             }
-            <div>{error}</div>
+            <div className='error'>{error}</div>
         </div>
     );
 };

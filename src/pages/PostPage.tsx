@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useEffect, useState} from "react";
 import CreatePostModal from "../modals/CreatePostModal";
 import {useSelector} from "react-redux";

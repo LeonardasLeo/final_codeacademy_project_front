@@ -13,7 +13,7 @@ type props = {
 const SingleUserInMessages = ({item, selectedUser,setSelectedUser}: props) => {
     const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
 
-    function joinRoom() {
+    function joinRoom(): void {
         const roomName: string = `${user.username}-${item.username}-room`
         socket.emit('requestJoinRoomFromClient', {roomName, userOne: user, userTwo: item})
     }

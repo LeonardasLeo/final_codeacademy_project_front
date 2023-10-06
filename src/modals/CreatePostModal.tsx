@@ -6,7 +6,7 @@ import {useDispatch} from "react-redux";
 import {updateAllPosts} from "../../features/states";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {socket} from "../App";
+import {emitPostInteraction} from "../api/sockets.ts";
 
 type props = {
     setIsCreatePost: React.Dispatch<SetStateAction<boolean>>
@@ -27,7 +27,7 @@ const CreatePostModal = ({setIsCreatePost}: props) => {
         }
         const response: IncomingDataTypes.DefaultResponse = await apiService.addPost(post)
         if (!response.error){
-            socket.emit('postAdded')
+            emitPostInteraction()
             dispatch(updateAllPosts(response.data))
         }else{
             setError(response.message)
@@ -42,7 +42,7 @@ const CreatePostModal = ({setIsCreatePost}: props) => {
             <input type="text" placeholder='Title' ref={titleRef}/>
             <input type="text" placeholder='Image' ref={imageRef}/>
             <button className='btn btn-primary' onClick={addPost}>Add post</button>
-            <div style={{color: 'red'}}>{error}</div>
+            <div className='error'>{error}</div>
         </div>
     );
 };

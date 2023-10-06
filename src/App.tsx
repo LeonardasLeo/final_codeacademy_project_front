@@ -40,15 +40,14 @@ function Root(): React.JSX.Element {
                         setError(res.message)
                     }
                 })
-                .catch(e => setError('Error getting user'))
+                .catch(() => setError('Error getting user'))
             socket.on('updateAllUsers', (val: UserTypes.User[]) => {
                 dispatch(updateAllUsers(val))
             })
             socket.on('updatePosts', (val: UserTypes.Post[]): void => {
                 dispatch(updateAllPosts(val))
             })
-            socket.on('requestRoomJoinFromServer', ({roomName}): void => {
-                console.log(roomName)
+            socket.on('requestRoomJoinFromServer', ({roomName}: {roomName: string}): void => {
                 socket.emit('joinRoom', roomName)
             })
             socket.on('updateUsers', ({userOne, userTwo}: IncomingDataTypes.UpdateUserData): void => {

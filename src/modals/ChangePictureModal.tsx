@@ -1,10 +1,10 @@
 import * as React from 'react';
 import {SetStateAction, useRef, useState} from "react";
-import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
+import {IncomingDataTypes} from "../types";
 import {apiService} from "../api/api";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {updateUser} from "../../features/states";
 import {socket} from "../App";
 
@@ -17,8 +17,6 @@ const ChangePictureModal = ({setIsPictureBeingChanged}: props) => {
     const imageRef: React.MutableRefObject<HTMLInputElement> = useRef()
     const [error, setError] = useState<string>('')
     const [success, setSuccess] = useState<string>()
-    const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
-
 
     async function changePicture (): Promise<void> {
         const imageLink: string = imageRef.current.value
@@ -43,8 +41,8 @@ const ChangePictureModal = ({setIsPictureBeingChanged}: props) => {
             </div>
             <input type="text" placeholder='New picture url' ref={imageRef}/>
             <button className='btn btn-primary' onClick={changePicture}>Change</button>
-            <div style={{color: 'red'}}>{error}</div>
-            <div style={{color: 'green'}}>{success}</div>
+            <div className='error'>{error}</div>
+            <div className='success'>{success}</div>
         </div>
     );
 };

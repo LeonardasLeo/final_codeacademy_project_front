@@ -19,9 +19,9 @@ const SingleUserInUsers = ({item, setIsMessage, setMessageTo}: props)=> {
     return (
         <div key={item._id} className='user-card'>
             <img src={item.profilePic} alt=""/>
-            <div className='d-flex flex-column justify-content-between'>
+            <div className='d-flex flex-column justify-content-between gap-3'>
                 <div>{item.username}</div>
-                <button className='btn btn-dark' onClick={() => openModal()}>Send message</button>
+                <div className='default-button' onClick={() => openModal()}>Send message</div>
             </div>
         </div>
     );

@@ -40,8 +40,8 @@ const ChangePasswordModal = ({setIsPasswordBeingChanged}: props) => {
             <input type="text" placeholder='New password' ref={passwordOneRef}/>
             <input type="text" placeholder='Repeat new password' ref={passwordTwoRef}/>
             <button className='btn btn-primary' onClick={changePassword}>Change</button>
-            <div style={{color: 'red'}}>{error}</div>
-            <div style={{color: 'green'}}>{success}</div>
+            <div className='error'>{error}</div>
+            <div className='success'>{success}</div>
         </div>
     );
 };

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useSelector} from "react-redux";
 import {ReduxTypes, UserTypes} from "../types";
 import SingleUserInUsers from "../components/SingleUserInUsers";

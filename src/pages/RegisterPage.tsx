@@ -54,7 +54,7 @@ const RegisterPage = () => {
                     <input type="text" placeholder='Password' ref={passwordRef}/>
                     <input type="text" placeholder='Repeat password' ref={passwordTwoRef}/>
                     <div className='default-button' onClick={register}>Register</div>
-                    <div style={{color: 'red'}}><b>{error}</b></div>
+                    <div className='error'><b>{error}</b></div>
                 </div>
             </div>
         </div>

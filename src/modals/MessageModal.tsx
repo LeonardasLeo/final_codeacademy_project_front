@@ -40,8 +40,8 @@ const MessageModal = ({to, setIsMessage}: props) => {
             </div>
             <input type="text" placeholder='Message' ref={messageRef}/>
             <button className='btn btn-primary' onClick={sendMessage}>Send message</button>
-            <div style={{color: 'red'}}>{error}</div>
-            <div style={{color: 'green'}}>{success}</div>
+            <div className='error'>{error}</div>
+            <div className='success'>{success}</div>
         </div>
     );
 };

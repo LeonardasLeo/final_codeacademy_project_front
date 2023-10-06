@@ -54,7 +54,7 @@ const LoginPage = () => {
                     <input type="checkbox" onChange={() => setAutoLogin(!autoLogin)}/> Keep me logged in
                 </div>
                 <div className='default-button' onClick={login}>Login</div>
-                <div style={{color: 'red'}}><b>{error}</b></div>
+                <div className='error'><b>{error}</b></div>
             </div>
         </div>
     );

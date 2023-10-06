@@ -62,8 +62,16 @@ export const apiService = {
         const response: AxiosResponse = await axios.post('/getSingleUser', {username}, getAuthorization())
         return response.data
     },
-    async comment(comment: UserTypes.Comment): Promise<IncomingDataTypes.UserData> {
-        const response: AxiosResponse = await axios.post('/comment', {comment}, getAuthorization())
+    async comment(comment: UserTypes.Comment, id: string): Promise<IncomingDataTypes.UserData> {
+        const response: AxiosResponse = await axios.post('/comment', {comment, id}, getAuthorization())
+        return response.data
+    },
+    async likeComment(commentId: number): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post('/likeComment', {commentId}, getAuthorization())
+        return response.data
+    },
+    async dislikeComment(commentId: number): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post('/dislikeComment', {commentId}, getAuthorization())
         return response.data
     }
 }

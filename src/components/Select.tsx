@@ -1,4 +1,3 @@
-import * as React from 'react';
 import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +19,7 @@ const Select = ({options, onSelect}: props) => {
             {isDropDown &&
                 <div className='custom-dropdown'>
                     {options.map((item: string, index: number) =>
-                            <div key={index} onClick={() => {
+                            <div key={index} onClick={(): void => {
                                 setSelected(item)
                                 onSelect(item)
                                 setIsDropDown(false)

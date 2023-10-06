@@ -20,10 +20,11 @@ export namespace OutgoingDataTypes {
 
 export namespace UserTypes{
     export type Comment = {
+        id: number
         username: string
         comment: string
-        likes: number
-        dislikes: number
+        likes: string[]
+        dislikes: string[]
         timestamp: Date
     }
     export type Post = {
@@ -31,8 +32,8 @@ export namespace UserTypes{
         username: string
         image: string
         title: string
-        likes: number
-        dislikes: number
+        likes: string[]
+        dislikes: string[]
         comments: Comment[]
         timestamp: Date
     }
@@ -40,7 +41,9 @@ export namespace UserTypes{
         _id: string
         username: string
         profilePic: string
-        messages: object
+        messages: {
+            [username: string]: Message[]
+        }
     }
     export type Message = {
         sender: string,

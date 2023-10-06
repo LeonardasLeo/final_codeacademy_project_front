@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
-import {SetStateAction, useRef, useState} from "react";
+import {useRef, useState} from "react";
 import {socket} from "../App";
 import {useSelector} from "react-redux";
 import {apiService} from "../api/api";
@@ -34,13 +34,13 @@ const SingleUserInPost = ({item}: props)=> {
             {item &&
                 <div key={item._id} className='user-card'>
                     <img src={item.profilePic} alt=""/>
-                    <div className='d-flex flex-column justify-content-between'>
+                    <div className='d-flex flex-column justify-content-between gap-3'>
                         <div>{item.username}</div>
                         {item.username !== user.username &&
-                            <div className='d-flex gap-3'>
+                            <div className='d-flex send-message-from-post'>
                                 <input type="text" placeholder='Write message' ref={messageRef}/>
-                                <button className='btn btn-dark' onClick={() => sentMessage()}>Send message</button>
-                                <div style={{color: 'red'}}>{error}</div>
+                                <div className='default-button' onClick={() => sentMessage()}>Send message</div>
+                                <div className='error'>{error}</div>
                             </div>
                         }
                     </div>

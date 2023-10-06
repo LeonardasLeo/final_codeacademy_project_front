@@ -52,15 +52,25 @@ const SortBar = ({posts, setPosts}: Props) => {
             }
             if (state.likeFilter !== defaultValue){
                 if (state.likeFilter === 'High to low'){
-                    result = b.likes - a.likes
+                    result = b.likes.length - a.likes.length
                 }
                 if (state.likeFilter === 'Low to high'){
-                    result = a.likes - b.likes
+                    result = a.likes.length - b.likes.length
+                }
+            }
+            if (state.timeFilter !== defaultValue){
+                const dateOne: number = new Date(a.timestamp).getTime()
+                const dateTwo: number = new Date(b.timestamp).getTime()
+                if (state.timeFilter === 'Newest'){
+                    result = dateOne - dateTwo
+                }
+                if (state.timeFilter === 'Oldest'){
+                    result = dateTwo - dateOne
                 }
             }
             return result
         }
-        if (result === 0){
+        if (state.commentFilter === defaultValue && state.likeFilter === defaultValue && state.timeFilter === defaultValue){
             return setPosts(allPosts)
         }
         const sortedPosts = [...posts].sort(compare)

@@ -57,7 +57,7 @@ const MessagePage = () => {
                                 <input type="text" placeholder='Message' ref={messageRef}/>
                                 <button className='send-button' onClick={sendMessage}>Send</button>
                             </div>
-                            <div style={{color: 'red'}}>{error}</div>
+                            <div className='error'>{error}</div>
                         </div>
                     }
                 </div>
