@@ -27,10 +27,6 @@ body input {
   color: var(--white-text);
 }
 
-.auto-login {
-  color: var(--white-text);
-}
-
 .username-display {
   font-weight: bold;
 }
@@ -57,10 +53,6 @@ body input {
   display: flex;
   justify-content: space-between;
   background-color: var(--black);
-  color: var(--white-text);
-}
-
-.profile-page {
   color: var(--white-text);
 }
 
@@ -281,10 +273,6 @@ body input {
   object-position: center;
 }
 
-.single-post-data {
-  color: var(--white-text);
-}
-
 .message-display::-webkit-scrollbar {
   width: 10px;
 }
@@ -342,12 +330,6 @@ body input {
 }
 .custom-dropdown div:last-of-type:hover {
   border-radius: 0 0 10px 10px;
-}
-
-.loading {
-  color: var(--white-text);
-  padding: 10px;
-  font-size: 20px;
 }
 
 .error {

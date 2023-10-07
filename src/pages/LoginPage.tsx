@@ -48,7 +48,7 @@ const LoginPage = () => {
             <div className='d-flex flex-column gap-2 p-5'>
                 <input type="text" placeholder='Username' ref={usernameRef}/>
                 <input type="text" placeholder='Password' ref={passwordRef}/>
-                <div className='auto-login'>
+                <div className='white-text'>
                     <input type="checkbox" onChange={() => setAutoLogin(!autoLogin)}/> Keep me logged in
                 </div>
                 <div className='default-button' onClick={login}>Login</div>

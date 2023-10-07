@@ -93,7 +93,7 @@ const SinglePostPage = () => {
                                 <SingleUserInPost item={userWhoPosted}/>
                                 <div className='mt-3 single-post-title'>{post.title}</div>
                             </div>
-                            <div className='single-post-data'>
+                            <div className='white-text'>
                                 <div className='likes'>Likes: <span className='yellow-text'>{post.likes.length}</span></div>
                                 <div className='likes'>Dislikes: <span className='yellow-text'>{post.dislikes.length}</span></div>
                                 <div>Posted on: <span className='yellow-text'>{useFormatTime(post.timestamp)}</span></div>
