@@ -51,10 +51,11 @@ function Root(): React.JSX.Element {
         socket.on('updatePosts', (val: UserTypes.Post[]): void => {
             dispatch(updateAllPosts(val))
         })
-        socket.on('requestRoomJoinFromServer', (val: string): void => {
-            socket.emit('joinRoom', val)
+        socket.on('requestRoomJoinFromServer', ({roomName}: {roomName: string }): void => {
+            socket.emit('joinRoom', roomName)
         })
         socket.on('updateUsers', ({userOne, userTwo}: IncomingDataTypes.UpdateUserData): void => {
+            console.log('got')
             const user: UserTypes.User = store.getState().states.user
             if (user.username === userOne.username) dispatch(updateUser(userOne))
             if (user.username === userTwo.username) dispatch(updateUser(userTwo))
