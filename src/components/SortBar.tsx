@@ -62,10 +62,10 @@ const SortBar = ({posts, setPosts}: Props) => {
                 const dateOne: number = new Date(a.timestamp).getTime()
                 const dateTwo: number = new Date(b.timestamp).getTime()
                 if (state.timeFilter === 'Newest'){
-                    result = dateOne - dateTwo
+                    result = dateTwo - dateOne
                 }
                 if (state.timeFilter === 'Oldest'){
-                    result = dateTwo - dateOne
+                    result = dateOne - dateTwo
                 }
             }
             return result

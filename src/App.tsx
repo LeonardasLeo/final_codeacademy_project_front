@@ -6,15 +6,15 @@ import {useDispatch} from "react-redux";
 import {updateAllPosts, updateAllUsers, updateUser} from "../features/states";
 import {apiService} from "./api/api";
 import { io } from "socket.io-client";
+import {store} from "./main";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import ProfilePage from "./pages/ProfilePage";
 import Navbar from "./components/Navbar";
 import PostPage from "./pages/PostPage";
-import config, {getToken} from "../config";
+import config from "../config";
 import UserPage from "./pages/UserPage";
 import MessagePage from "./pages/MessagePage";
-import {store} from "./main";
 import SinglePostPage from "./pages/SinglePostPage";
 
 export const socket: SocketType = io(config.serverRoute, {
@@ -24,48 +24,45 @@ export const socket: SocketType = io(config.serverRoute, {
 function Root(): React.JSX.Element {
     const dispatch = useDispatch()
     const nav: NavigateFunction = useNavigate()
-    const jwtToken: string = localStorage.getItem('token') || sessionStorage.getItem('token')
+    const jwtToken: string = config.token()
     const [error, setError] = useState<string>('')
     useEffect((): void => {
         if (jwtToken){
             apiService.getUserData()
                 .then((res: IncomingDataTypes.AllUserData): void => {
                     if (!res.error){
-                        config.token = jwtToken
-                        socket.emit('userConnected', getToken())
+                        socket.emit('userConnected', config.token())
                         dispatch(updateUser(res.data.user))
                         dispatch(updateAllUsers(res.data.allUsers))
                         dispatch(updateAllPosts(res.data.allPosts))
+                        setError('')
+                        nav('/profile')
                     }else{
                         setError(res.message)
                     }
                 })
                 .catch(() => setError('Error getting user'))
-            socket.on('updateAllUsers', (val: UserTypes.User[]) => {
-                dispatch(updateAllUsers(val))
-            })
-            socket.on('updatePosts', (val: UserTypes.Post[]): void => {
-                dispatch(updateAllPosts(val))
-            })
-            socket.on('requestRoomJoinFromServer', ({roomName}: {roomName: string}): void => {
-                socket.emit('joinRoom', roomName)
-            })
-            socket.on('updateUsers', ({userOne, userTwo}: IncomingDataTypes.UpdateUserData): void => {
-                const user: UserTypes.User = store.getState().states.user
-                if (user.username === userOne.username) dispatch(updateUser(userOne))
-                if (user.username === userTwo.username) dispatch(updateUser(userTwo))
-            })
-            setError('')
-            return
         }else{
-            return nav('/login')
+            nav('/login')
         }
-
+        socket.on('updateAllUsers', (val: UserTypes.User[]): void => {
+            dispatch(updateAllUsers(val))
+        })
+        socket.on('updatePosts', (val: UserTypes.Post[]): void => {
+            dispatch(updateAllPosts(val))
+        })
+        socket.on('requestRoomJoinFromServer', (val: string): void => {
+            socket.emit('joinRoom', val)
+        })
+        socket.on('updateUsers', ({userOne, userTwo}: IncomingDataTypes.UpdateUserData): void => {
+            const user: UserTypes.User = store.getState().states.user
+            if (user.username === userOne.username) dispatch(updateUser(userOne))
+            if (user.username === userTwo.username) dispatch(updateUser(userTwo))
+        })
     }, [])
   return (
     <div>
-        {/*{token && <div>toolbar</div>}*/}
-        <Navbar/>
+        {jwtToken && <Navbar/>}
         {error && <div>{error}</div>}
         <Routes>
             <Route path='/' element={<RegisterPage/>}/>

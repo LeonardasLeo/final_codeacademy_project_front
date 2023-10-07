@@ -1,6 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {IncomingDataTypes, OutgoingDataTypes, UserTypes} from "../types";
-import config, {getToken} from "../../config.ts";
+import config from "../../config.ts";
 
 
 
@@ -12,7 +12,7 @@ axios.defaults.headers.post['content-type'] = 'application/json'
 const getAuthorization = (): {headers: {authorization: string | null}} => {
     return {
         headers: {
-            authorization: getToken()
+            authorization: config.token()
         }
     }
 }

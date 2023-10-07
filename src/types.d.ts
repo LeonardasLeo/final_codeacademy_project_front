@@ -2,7 +2,7 @@ import {Socket} from "socket.io-client";
 
 export type Config = {
     serverRoute: string,
-    token: string | null
+    token: () => string
 }
 
 export type SocketType = Socket<DefaultEventsMap, DefaultEventsMap, DefaultEventsMap, any>

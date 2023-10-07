@@ -20,7 +20,7 @@ const SingleUserInPost = ({item}: props)=> {
         const response: IncomingDataTypes.DefaultResponse = await apiService.sendMessage(messageValue, item)
         if (!response.data){
             const roomName: string = `${user.username}-${item.username}-room`
-            socket.emit('requestJoinRoomClient', {roomName, userOne: user, userTwo: item})
+            socket.emit('requestJoinRoomClient', {roomName, userTwo: item})
             socket.emit('sendMessage', {roomName, userOne: user, userTwo: item})
             messageRef.current.value = ''
         }else{

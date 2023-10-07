@@ -15,7 +15,7 @@ const SingleUserInMessages = ({item, selectedUser,setSelectedUser}: props) => {
 
     function joinRoom(): void {
         const roomName: string = `${user.username}-${item.username}-room`
-        socket.emit('requestJoinRoomFromClient', {roomName, userOne: user, userTwo: item})
+        socket.emit('requestJoinRoomFromClient', {roomName, userTwo: item})
     }
 
     return (

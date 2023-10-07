@@ -67,6 +67,7 @@ const SinglePostPage = () => {
          if (!response.error){
              emitPostInteraction()
              setError('')
+             commentRef.current.value = ''
          }else{
              setError(response.message)
          }

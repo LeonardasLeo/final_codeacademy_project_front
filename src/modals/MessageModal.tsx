@@ -27,6 +27,7 @@ const MessageModal = ({to, setIsMessage}: props) => {
             socket.emit('sendMessage', {roomName, userOne: user, userTwo: to})
             setSuccess(response.message)
             setError('')
+            messageRef.current.value = ''
         }else{
             setError(response.message)
             setSuccess('')
