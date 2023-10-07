@@ -63,7 +63,7 @@ function Root(): React.JSX.Element {
   return (
     <div>
         {jwtToken && <Navbar/>}
-        {error && <div>{error}</div>}
+        {!jwtToken && <div>{error}</div>}
         <Routes>
             <Route path='/' element={<RegisterPage/>}/>
             <Route path='/login' element={<LoginPage/>}/>

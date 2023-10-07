@@ -51,7 +51,13 @@ const MessagePage = () => {
                                 )}
                             </div>
                             <div className='toolbar'>
-                                <input type="text" placeholder='Message' ref={messageRef}/>
+                                <input type="text" placeholder='Message' ref={messageRef}
+                                       onKeyDown={async (e: React.KeyboardEvent) => {
+                                            if (e.keyCode === 13){
+                                                await sendMessage()
+                                            }
+                                       }}
+                                />
                                 <button className='send-button' onClick={sendMessage}>Send</button>
                             </div>
                             <div className='error'>{error}</div>

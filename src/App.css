@@ -298,7 +298,7 @@ body input {
   border-radius: 0 0 10px 0;
   background-color: var(--blue);
   border: none;
-  color: var(--white-white);
+  color: var(--white-text);
   padding: 0 20px 0 20px;
 }
 
