@@ -3,8 +3,8 @@ import {useSelector} from "react-redux";
 import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
 import SingleUserInMessages from "../components/SingleUserInMessages";
 import {useEffect, useRef, useState} from "react";
-import {socket} from "../App";
 import {apiService} from "../api/api";
+import {emitSendMessage} from "../api/sockets.ts";
 
 const MessagePage = () => {
     const messageRef: React.MutableRefObject<HTMLInputElement> = useRef()
@@ -24,7 +24,7 @@ const MessagePage = () => {
         const response: IncomingDataTypes.DefaultResponse = await apiService.sendMessage(messageValue, selectedUser)
         if (!response.error){
             const roomName: string = `${user.username}-${selectedUser.username}-room`
-            socket.emit('sendMessage', {roomName, userOne: user, userTwo: selectedUser})
+            emitSendMessage(roomName, user, selectedUser)
             messageRef.current.value = ''
         }else{
             setError(response.message)

@@ -6,7 +6,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
 import {useDispatch} from "react-redux";
 import {updateUser} from "../../features/states";
-import {socket} from "../App";
+import {emitProfilePicChange} from "../api/sockets.ts";
 
 type props =  {
     setIsPictureBeingChanged: React.Dispatch<SetStateAction<boolean>>
@@ -24,7 +24,7 @@ const ChangePictureModal = ({setIsPictureBeingChanged}: props) => {
         const data: IncomingDataTypes.UserData = await apiService.changeProfilePicture(imageLink)
         if (!data.error){
             dispatch(updateUser(data.data))
-            socket.emit('profilePictureChanged')
+            emitProfilePicChange()
             console.log(data.data)
             setSuccess(data.message)
             setError('')

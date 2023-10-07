@@ -5,7 +5,7 @@ import {apiService} from "../api/api";
 import {useSelector} from "react-redux";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faTimes} from "@fortawesome/free-solid-svg-icons";
-import {socket} from "../App";
+import {emitRequestRoomJoin, emitSendMessage} from "../api/sockets.ts";
 
 type props = {
     to: UserTypes.User
@@ -23,8 +23,8 @@ const MessageModal = ({to, setIsMessage}: props) => {
         const response: IncomingDataTypes.DefaultResponse = await apiService.sendMessage(messageValue, to)
         if (!response.error){
             const roomName: string = `${user.username}-${to.username}-room`
-            socket.emit('requestJoinRoomFromClient', {roomName, userOne: user, userTwo: to})
-            socket.emit('sendMessage', {roomName, userOne: user, userTwo: to})
+            emitRequestRoomJoin(roomName, to)
+            emitSendMessage(roomName, user, to)
             setSuccess(response.message)
             setError('')
             messageRef.current.value = ''

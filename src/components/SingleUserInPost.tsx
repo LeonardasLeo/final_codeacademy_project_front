@@ -1,9 +1,9 @@
 import * as React from 'react';
 import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
 import {useRef, useState} from "react";
-import {socket} from "../App";
 import {useSelector} from "react-redux";
 import {apiService} from "../api/api";
+import {emitRequestRoomJoin, emitSendMessage} from "../api/sockets.ts";
 
 type props = {
     item: UserTypes.User
@@ -20,8 +20,8 @@ const SingleUserInPost = ({item}: props)=> {
         const response: IncomingDataTypes.DefaultResponse = await apiService.sendMessage(messageValue, item)
         if (!response.data){
             const roomName: string = `${user.username}-${item.username}-room`
-            socket.emit('requestJoinRoomClient', {roomName, userTwo: item})
-            socket.emit('sendMessage', {roomName, userOne: user, userTwo: item})
+            emitRequestRoomJoin(roomName, item)
+            emitSendMessage(roomName, user, item)
             messageRef.current.value = ''
         }else{
             setError(response.message)

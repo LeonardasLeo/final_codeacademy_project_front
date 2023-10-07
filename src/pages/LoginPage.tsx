@@ -5,8 +5,8 @@ import {IncomingDataTypes, OutgoingDataTypes,} from "../types";
 import {useDispatch} from "react-redux";
 import {updateAllPosts, updateAllUsers, updateUser} from "../../features/states";
 import {apiService} from "../api/api";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {socket} from "../App";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const LoginPage = () => {
     const nav: NavigateFunction = useNavigate()

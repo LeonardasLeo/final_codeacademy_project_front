@@ -73,7 +73,7 @@ const SortBar = ({posts, setPosts}: Props) => {
         if (state.commentFilter === defaultValue && state.likeFilter === defaultValue && state.timeFilter === defaultValue){
             return setPosts(allPosts)
         }
-        const sortedPosts = [...posts].sort(compare)
+        const sortedPosts: UserTypes.Post[] = [...posts].sort(compare)
         setPosts(sortedPosts)
     }, [state])
 

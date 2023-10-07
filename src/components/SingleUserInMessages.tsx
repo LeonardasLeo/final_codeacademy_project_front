@@ -1,8 +1,8 @@
 import * as React from 'react';
 import {ReduxTypes, UserTypes} from "../types";
 import {SetStateAction} from "react";
-import {socket} from "../App";
 import {useSelector} from "react-redux";
+import {emitRequestRoomJoin} from "../api/sockets.ts";
 
 type props = {
     item: UserTypes.User,
@@ -15,7 +15,7 @@ const SingleUserInMessages = ({item, selectedUser,setSelectedUser}: props) => {
 
     function joinRoom(): void {
         const roomName: string = `${user.username}-${item.username}-room`
-        socket.emit('requestJoinRoomFromClient', {roomName, userTwo: item})
+        emitRequestRoomJoin(roomName, item)
     }
 
     return (
