@@ -1,7 +1,7 @@
 import {Socket} from "socket.io-client";
 
 export type Config = {
-    serverRoute: string,
+    serverRoute: string
     token: () => string
 }
 
@@ -46,8 +46,9 @@ export namespace UserTypes{
         }
     }
     export type Message = {
-        sender: string,
+        sender: string
         value: string
+        timestamp: Date
     }
 }
 

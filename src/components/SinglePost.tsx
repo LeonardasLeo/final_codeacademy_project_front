@@ -5,11 +5,10 @@ import {apiService} from "../api/api";
 import React, {useState} from "react";
 import {NavigateFunction, useNavigate} from "react-router-dom";
 import {emitPostInteraction} from "../api/sockets.ts";
+import useFormatTime from "../hooks/useFormatTime.ts";
 
 const SinglePost = ({post}: {post: UserTypes.Post}) => {
     const nav: NavigateFunction = useNavigate()
-    const date: Date = new Date(post.timestamp)
-    const dateString: string = `${date.getFullYear()}.${date.getMonth()}.${date.getDate()} ${date.getHours()}:${date.getMinutes()}h`
     const [error, setError] = useState<string>('')
     async function likePost (): Promise<void> {
         const response:IncomingDataTypes.DefaultResponse = await apiService.likePost(post._id)
@@ -39,7 +38,7 @@ const SinglePost = ({post}: {post: UserTypes.Post}) => {
                 <h5 className="card-title">{post.title}</h5>
             </div>
             <div>{post.username}</div>
-            <div className='post-date-display'>{dateString}</div>
+            <div className='post-date-display'>{useFormatTime(post.timestamp)}</div>
             <div className='d-flex align-items-center gap-4'>
                 <div className='reaction-and-count'>{post.likes.length}
                     <div className='reaction' onClick={async (e: React.MouseEvent<HTMLDivElement>) => {

@@ -55,7 +55,6 @@ function Root(): React.JSX.Element {
             socket.emit('joinRoom', roomName)
         })
         socket.on('updateUsers', ({userOne, userTwo}: IncomingDataTypes.UpdateUserData): void => {
-            console.log('got')
             const user: UserTypes.User = store.getState().states.user
             if (user.username === userOne.username) dispatch(updateUser(userOne))
             if (user.username === userTwo.username) dispatch(updateUser(userTwo))

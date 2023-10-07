@@ -209,17 +209,6 @@ body{
   overflow: auto;
 }
 
-.single-post-image{
-  max-height: 400px;
-  img {
-    border-radius: 10px;
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    object-position: center;
-  }
-}
-
 .comment-container{
   display: flex;
   flex-direction: column;
@@ -258,8 +247,6 @@ body{
   }
 }
 
-
-
 .comment-container::-webkit-scrollbar{
   width: 5px;
 }
@@ -282,6 +269,21 @@ body{
 .single-post-title{
   color: var(--white-text);
   font-size: 30px;
+}
+
+.single-post-image{
+  max-height: 400px;
+  img {
+    border-radius: 10px;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.single-post-data{
+  color: var(--white-text);
 }
 
 .message-display::-webkit-scrollbar{
@@ -356,7 +358,6 @@ body{
 .success{
   color: var(--green)
 }
-
 
 .flex-1{
   flex: 1;

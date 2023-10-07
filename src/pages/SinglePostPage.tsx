@@ -7,6 +7,7 @@ import SingleUserInPost from "../components/SingleUserInPost";
 import {useSelector} from "react-redux";
 import Comment from "../components/Comment.tsx";
 import {emitPostInteraction} from "../api/sockets.ts";
+import useFormatTime from "../hooks/useFormatTime.ts";
 
 const SinglePostPage = () => {
     const {id} = useParams()
@@ -51,6 +52,13 @@ const SinglePostPage = () => {
             setError('')
         }
     }
+    async function dislikePost (): Promise<void> {
+        const response:IncomingDataTypes.DefaultResponse = await apiService.dislikePost(post._id)
+        if (!response.error){
+            emitPostInteraction()
+            setError('')
+        }
+    }
 
      async function comment (): Promise<void> {
         const commentValue: string = commentRef.current.value
@@ -72,10 +80,6 @@ const SinglePostPage = () => {
              setError(response.message)
          }
     }
-    function formatTimestamp(timestamp: Date): string {
-        const date: Date = new Date(timestamp)
-        return`${date.getFullYear()}.${date.getMonth()}.${date.getDate()} ${date.getHours()}:${date.getMinutes()}h`
-    }
     return (
         <div>
             {post && user &&
@@ -89,12 +93,15 @@ const SinglePostPage = () => {
                                 <SingleUserInPost item={userWhoPosted}/>
                                 <div className='mt-3 single-post-title'>{post.title}</div>
                             </div>
-                            <div className='single-post-data white-text'>
-                                <div className='likes'>{post.likes.length} likes</div>
-                                <div className='likes'>{post.dislikes.length} dislikes</div>
-                                <div>Posted on: {formatTimestamp(post.timestamp)}</div>
+                            <div className='single-post-data'>
+                                <div className='likes'>Likes: <span className='yellow-text'>{post.likes.length}</span></div>
+                                <div className='likes'>Dislikes: <span className='yellow-text'>{post.dislikes.length}</span></div>
+                                <div>Posted on: <span className='yellow-text'>{useFormatTime(post.timestamp)}</span></div>
                             </div>
-                            <div className='default-button' onClick={likePost}>Like</div>
+                            <div className='d-flex flex-column gap-2'>
+                                <div className='default-button' onClick={likePost}>Like</div>
+                                <div className='default-button' onClick={dislikePost}>Dislike</div>
+                            </div>
                         </div>
                     </div>
                     <div className='flex-1 d-flex flex-column'>

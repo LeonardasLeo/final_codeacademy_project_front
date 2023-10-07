@@ -5,6 +5,8 @@ import SingleUserInMessages from "../components/SingleUserInMessages";
 import {useEffect, useRef, useState} from "react";
 import {apiService} from "../api/api";
 import {emitSendMessage} from "../api/sockets.ts";
+import Message from "../components/Message.tsx";
+
 
 const MessagePage = () => {
     const messageRef: React.MutableRefObject<HTMLInputElement> = useRef()
@@ -45,12 +47,7 @@ const MessagePage = () => {
                         <div>
                             <div className='d-flex flex-column gap-3 message-display' ref={chatContainerRef}>
                                 {user.messages[selectedUser.username].map((item: UserTypes.Message, index: number) =>
-                                    <div key={index} className={`${item.sender === user.username && 'justify-content-end'} d-flex`}>
-                                        <div className={`${item.sender === user.username && 'text-end'} message d-flex flex-column`}>
-                                            <div>{item.sender}</div>
-                                            <div>{item.value}</div>
-                                        </div>
-                                    </div>
+                                    <Message key={index} item={item} user={user}/>
                                 )}
                             </div>
                             <div className='toolbar'>
