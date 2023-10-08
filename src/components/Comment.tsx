@@ -5,6 +5,7 @@ import {apiService} from "../api/api.ts";
 import {useState} from "react";
 import {emitPostInteraction} from "../api/sockets.ts";
 import useFormatTime from "../hooks/useFormatTime.ts";
+import useInteractionCheck from "../hooks/useInteractionCheck.ts";
 
 const Comment = ({item}: {item: UserTypes.Comment}) => {
     const [error, setError] = useState<string>('')
@@ -37,13 +38,13 @@ const Comment = ({item}: {item: UserTypes.Comment}) => {
                 <div className='d-flex gap-1'>
                     <div>{item.likes.length}</div>
                     <div className='reaction' onClick={() => likeComment()}>
-                        <FontAwesomeIcon fontSize='12px' icon={faThumbsUp}/>
+                        <FontAwesomeIcon className={useInteractionCheck('likes', item)} fontSize='12px' icon={faThumbsUp}/>
                     </div>
                 </div>
                 <div className='d-flex gap-1'>
                     <div>{item.dislikes.length}</div>
                     <div className='reaction' onClick={() => dislikeComment()}>
-                        <FontAwesomeIcon fontSize='12px' icon={faThumbsDown}/>
+                        <FontAwesomeIcon className={useInteractionCheck('dislikes', item)} fontSize='12px' icon={faThumbsDown}/>
                     </div>
                 </div>
                 <div className='error'>{error}</div>

@@ -23,9 +23,22 @@ body{
   }
 }
 
+.blue-text{
+  color: var(--blue)
+}
+
 .white-text{
   color: var(--white-text);
 }
+
+.error{
+  color: var(--red)
+}
+
+.success{
+  color: var(--green)
+}
+
 
 .username-display{
   font-weight: bold;
@@ -333,13 +346,6 @@ body{
   }
 }
 
-.error{
-  color: var(--red)
-}
-
-.success{
-  color: var(--green)
-}
 
 .flex-1{
   flex: 1;

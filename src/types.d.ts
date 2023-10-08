@@ -41,9 +41,7 @@ export namespace UserTypes{
         _id: string
         username: string
         profilePic: string
-        messages: {
-            [username: string]: Message[]
-        }
+        messages: Record<string, Message[]>
     }
     export type Message = {
         sender: string

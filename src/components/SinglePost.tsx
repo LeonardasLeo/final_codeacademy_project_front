@@ -6,6 +6,7 @@ import React, {useState} from "react";
 import {NavigateFunction, useNavigate} from "react-router-dom";
 import {emitPostInteraction} from "../api/sockets.ts";
 import useFormatTime from "../hooks/useFormatTime.ts";
+import useInteractionCheck from "../hooks/useInteractionCheck.ts";
 
 const SinglePost = ({post}: {post: UserTypes.Post}) => {
     const nav: NavigateFunction = useNavigate()
@@ -46,7 +47,7 @@ const SinglePost = ({post}: {post: UserTypes.Post}) => {
                         e.stopPropagation()
                         await likePost()
                     }}>
-                        <FontAwesomeIcon icon={faThumbsUp}/>
+                        <FontAwesomeIcon className={useInteractionCheck('likes', post)} icon={faThumbsUp}/>
                     </div>
                 </div>
                 <div className='reaction-and-count'>
@@ -55,7 +56,7 @@ const SinglePost = ({post}: {post: UserTypes.Post}) => {
                         e.stopPropagation()
                         await dislikePost()
                     }}>
-                        <FontAwesomeIcon icon={faThumbsDown}/>
+                        <FontAwesomeIcon className={useInteractionCheck('dislikes', post)} icon={faThumbsDown}/>
                     </div>
                 </div>
                 <div className='reaction-and-count'>

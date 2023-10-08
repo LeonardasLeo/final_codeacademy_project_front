@@ -15,8 +15,8 @@ const SinglePostPage = () => {
     const commentContainerRef: React.MutableRefObject<HTMLDivElement> = useRef()
     const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
     const [error, setError] = useState<string>('')
-    const [post, setPost] = useState<UserTypes.Post | undefined>(undefined)
-    const [userWhoPosted, setUserWhoPosted] = useState<UserTypes.User | undefined>(undefined)
+    const [post, setPost] = useState<UserTypes.Post>(undefined)
+    const [userWhoPosted, setUserWhoPosted] = useState<UserTypes.User>(undefined)
     const allPosts: UserTypes.Post[] = useSelector((state: ReduxTypes.ReduxStates) => state.states.allPosts)
     useEffect((): void => {
         apiService.getSinglePost(id)
@@ -94,8 +94,8 @@ const SinglePostPage = () => {
                                 <div className='mt-3 single-post-title'>{post.title}</div>
                             </div>
                             <div className='white-text'>
-                                <div className='likes'>Likes: <span className='yellow-text'>{post.likes.length}</span></div>
-                                <div className='likes'>Dislikes: <span className='yellow-text'>{post.dislikes.length}</span></div>
+                                <div className='likes'>Likes: <span >{post.likes.length}</span></div>
+                                <div className='likes'>Dislikes: <span>{post.dislikes.length}</span></div>
                                 <div>Posted on: <span className='yellow-text'>{useFormatTime(post.timestamp)}</span></div>
                             </div>
                             <div className='d-flex flex-column gap-2'>
