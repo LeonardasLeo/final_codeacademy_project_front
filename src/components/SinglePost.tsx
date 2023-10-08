@@ -1,4 +1,4 @@
-import {IncomingDataTypes, UserTypes} from "../types";
+import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCommentDots, faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {apiService} from "../api/api";
@@ -6,9 +6,11 @@ import React, {useState} from "react";
 import {NavigateFunction, useNavigate} from "react-router-dom";
 import {emitPostInteraction} from "../api/sockets.ts";
 import useFormatTime from "../hooks/useFormatTime.ts";
+import {useSelector} from "react-redux";
 
 const SinglePost = ({post}: {post: UserTypes.Post}) => {
     const nav: NavigateFunction = useNavigate()
+    const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
     const [error, setError] = useState<string>('')
     async function likePost (): Promise<void> {
         const response:IncomingDataTypes.DefaultResponse = await apiService.likePost(post._id)
@@ -46,7 +48,7 @@ const SinglePost = ({post}: {post: UserTypes.Post}) => {
                         e.stopPropagation()
                         await likePost()
                     }}>
-                        <FontAwesomeIcon icon={faThumbsUp}/>
+                        <FontAwesomeIcon className={`${post.likes.includes(user.username) && 'blue-text'}`} icon={faThumbsUp}/>
                     </div>
                 </div>
                 <div className='reaction-and-count'>
@@ -55,7 +57,7 @@ const SinglePost = ({post}: {post: UserTypes.Post}) => {
                         e.stopPropagation()
                         await dislikePost()
                     }}>
-                        <FontAwesomeIcon icon={faThumbsDown}/>
+                        <FontAwesomeIcon className={`${post.dislikes.includes(user.username) && 'blue-text'}`} icon={faThumbsDown}/>
                     </div>
                 </div>
                 <div className='reaction-and-count'>

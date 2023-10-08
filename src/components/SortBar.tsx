@@ -15,6 +15,11 @@ type ActionType =
     | { type: 'setLikeFilter'; value: string }
     | { type: 'setTimeFilter'; value: string };
 
+type Props = {
+    posts: UserTypes.Post[]
+    setPosts: React.Dispatch<SetStateAction<UserTypes.Post[]>>
+}
+
 function reducer (state: SelectionsType, action: ActionType): SelectionsType {
     switch (action.type) {
         case 'setCommentFilter':
@@ -28,10 +33,7 @@ function reducer (state: SelectionsType, action: ActionType): SelectionsType {
     }
 }
 
-type Props = {
-    posts: UserTypes.Post[]
-    setPosts: React.Dispatch<SetStateAction<UserTypes.Post[]>>
-}
+
 
 const SortBar = ({posts, setPosts}: Props) => {
     const defaultValue: string = 'None'

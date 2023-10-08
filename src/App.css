@@ -23,8 +23,20 @@ body input {
   outline: none;
 }
 
+.blue-text {
+  color: var(--blue);
+}
+
 .white-text {
   color: var(--white-text);
+}
+
+.error {
+  color: var(--red);
+}
+
+.success {
+  color: var(--green);
 }
 
 .username-display {
@@ -330,14 +342,6 @@ body input {
 }
 .custom-dropdown div:last-of-type:hover {
   border-radius: 0 0 10px 10px;
-}
-
-.error {
-  color: var(--red);
-}
-
-.success {
-  color: var(--green);
 }
 
 .flex-1 {

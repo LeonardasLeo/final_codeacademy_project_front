@@ -1,12 +1,14 @@
-import {IncomingDataTypes, UserTypes} from "../types";
+import {IncomingDataTypes, ReduxTypes, UserTypes} from "../types";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faThumbsDown, faThumbsUp} from "@fortawesome/free-solid-svg-icons";
 import {apiService} from "../api/api.ts";
 import {useState} from "react";
 import {emitPostInteraction} from "../api/sockets.ts";
 import useFormatTime from "../hooks/useFormatTime.ts";
+import {useSelector} from "react-redux";
 
 const Comment = ({item}: {item: UserTypes.Comment}) => {
+    const user: UserTypes.User = useSelector((state: ReduxTypes.ReduxStates) => state.states.user)
     const [error, setError] = useState<string>('')
     async function likeComment(): Promise<void> {
         const response: IncomingDataTypes.DefaultResponse = await apiService.likeComment(item.id)
@@ -37,13 +39,13 @@ const Comment = ({item}: {item: UserTypes.Comment}) => {
                 <div className='d-flex gap-1'>
                     <div>{item.likes.length}</div>
                     <div className='reaction' onClick={() => likeComment()}>
-                        <FontAwesomeIcon fontSize='12px' icon={faThumbsUp}/>
+                        <FontAwesomeIcon className={`${item.likes.includes(user.username) && 'blue-text'}`} fontSize='12px' icon={faThumbsUp}/>
                     </div>
                 </div>
                 <div className='d-flex gap-1'>
                     <div>{item.dislikes.length}</div>
                     <div className='reaction' onClick={() => dislikeComment()}>
-                        <FontAwesomeIcon fontSize='12px' icon={faThumbsDown}/>
+                        <FontAwesomeIcon className={`${item.dislikes.includes(user.username) && 'blue-text'}`} fontSize='12px' icon={faThumbsDown}/>
                     </div>
                 </div>
                 <div className='error'>{error}</div>

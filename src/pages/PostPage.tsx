@@ -21,12 +21,13 @@ const PostPage = () => {
                     <SortBar posts={posts} setPosts={setPosts}/>
                     <div className='default-button' onClick={() => setIsCreatePost(true)}>Create Post</div>
                 </div>
-                {posts &&
+                {posts && posts.length > 0 ?
                     <div className='d-flex mx-auto flex-wrap gap-3 p-5'>
                         {posts.map((item: UserTypes.Post) =>
                             <SinglePost key={item._id} post={item}/>
                         )}
                     </div>
+                    : <div className='white-text d-flex justify-content-center'>No posts yet</div>
                 }
             </div>
         </div>

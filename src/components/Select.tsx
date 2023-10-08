@@ -3,7 +3,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faAngleDown} from "@fortawesome/free-solid-svg-icons";
 
 type props = {
-    options: Array<string>
+    options: string[]
     onSelect: (item: string) => void
 }
 const Select = ({options, onSelect}: props) => {
