@@ -23,7 +23,7 @@ const SingleUserInMessages = ({item, selectedUser,setSelectedUser}: props) => {
             setSelectedUser(item)
             joinRoom()
         }} style={{cursor: 'pointer'}}>
-            <img src={item.profilePic} alt=""/>
+            <img src={item.profilePic} alt="" loading='lazy'/>
             <div>{item.username}</div>
         </div>
     );

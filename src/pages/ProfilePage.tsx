@@ -17,7 +17,7 @@ const ProfilePage = () => {
                     {isPictureBeingChanged && <ChangePictureModal setIsPictureBeingChanged={setIsPictureBeingChanged}/>}
                     <div className={`d-flex align-items-center gap-4 ${(isPictureBeingChanged || isPasswordBeingChanged) && 'opacity events-none'}`}>
                         <div className='profile-pic'>
-                            <img src={user.profilePic} alt=""/>
+                            <img src={user.profilePic} alt="" loading='lazy'/>
                         </div>
                         <div className='d-flex flex-column gap-2'>
                             <div className='fs-5'><b>{user.username}</b></div>

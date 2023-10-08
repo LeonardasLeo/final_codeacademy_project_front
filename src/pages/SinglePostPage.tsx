@@ -86,7 +86,7 @@ const SinglePostPage = () => {
                 <div className='p-5 d-flex flex-column gap-3'>
                     <div className='flex-1 d-flex gap-3'>
                         <div className='single-post-image flex-1'>
-                            <img src={post.image} alt=""/>
+                            <img src={post.image} alt="" loading='lazy'/>
                         </div>
                         <div className='flex-1 d-flex flex-column justify-content-between'>
                             <div>

@@ -33,7 +33,7 @@ const SingleUserInPost = ({item}: props)=> {
         <div>
             {item &&
                 <div key={item._id} className='user-card'>
-                    <img src={item.profilePic} alt=""/>
+                    <img src={item.profilePic} alt="" loading='lazy'/>
                     <div className='d-flex flex-column justify-content-between gap-3'>
                         <div>{item.username}</div>
                         {item.username !== user.username &&
