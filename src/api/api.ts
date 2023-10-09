@@ -73,6 +73,10 @@ export const apiService = {
     async dislikeComment(commentId: number): Promise<IncomingDataTypes.DefaultResponse> {
         const response: AxiosResponse = await axios.post('/dislikeComment', {commentId}, getAuthorization())
         return response.data
+    },
+    async deletePost(id: string): Promise<IncomingDataTypes.DefaultResponse> {
+        const response: AxiosResponse = await axios.post('/deletePost', {id}, getAuthorization())
+        return response.data
     }
 }
 
