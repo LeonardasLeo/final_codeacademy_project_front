@@ -15,6 +15,7 @@
 
 body {
   background-color: var(--dark-gray);
+  font-family: "Carlito", serif;
 }
 body input {
   border: none;
