@@ -1,6 +1,8 @@
 import * as React from 'react';
 import {UserTypes} from "../types";
 import {SetStateAction} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faCommentDots} from "@fortawesome/free-solid-svg-icons";
 
 
 type props = {
@@ -17,11 +19,13 @@ const SingleUserInUsers = ({item, setIsMessage, setMessageTo}: props)=> {
 
 
     return (
-        <div key={item._id} className='user-card'>
-            <img src={item.profilePic} alt="" loading='lazy'/>
-            <div className='d-flex flex-column justify-content-between gap-3'>
+        <div key={item._id} className='user-card justify-content-between'>
+            <div className='d-flex align-items-center gap-3'>
+                <img src={item.profilePic} alt="" loading='lazy'/>
                 <div>{item.username}</div>
-                <div className='default-button' onClick={() => openModal()}>Send message</div>
+            </div>
+            <div className='reaction' onClick={openModal}>
+                <FontAwesomeIcon size='xl' icon={faCommentDots}/>
             </div>
         </div>
     );

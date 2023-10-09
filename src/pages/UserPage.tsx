@@ -14,11 +14,13 @@ const UserPage = () => {
         <div>
             {isMessage && <MessageModal to={messageTo} setIsMessage={setIsMessage}/>}
             <div className={`d-flex gap-3 flex-wrap p-5 ${isMessage && 'opacity events-none'}`}>
-                {allUsers &&
+                {allUsers && allUsers.length > 0 ?
                     allUsers.map((item: UserTypes.User) =>
                         item.username !== user.username &&
                         <SingleUserInUsers key={item._id} item={item} setIsMessage={setIsMessage} setMessageTo={setMessageTo}/>
                     )
+                    :
+                    <div className='white-text'>No users yet</div>
                 }
             </div>
         </div>

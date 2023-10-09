@@ -94,7 +94,7 @@ const SinglePostPage = () => {
                                 <div className='mt-3 single-post-title'>{post.title}</div>
                             </div>
                             <div className='white-text'>
-                                <div className='likes'>Likes: <span >{post.likes.length}</span></div>
+                                <div className='likes'>Likes: <span>{post.likes.length}</span></div>
                                 <div className='likes'>Dislikes: <span>{post.dislikes.length}</span></div>
                                 <div>Posted on: <span className='yellow-text'>{useFormatTime(post.timestamp)}</span></div>
                             </div>

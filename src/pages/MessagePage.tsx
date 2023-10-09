@@ -36,10 +36,12 @@ const MessagePage = () => {
         <div>
             {user && <div className='d-flex gap-3 p-5'>
                 <div className='flex-1 d-flex flex-column gap-3'>
-                    {allUsers &&
+                    {allUsers && allUsers.length > 0 ?
                         allUsers.map((item: UserTypes.User) =>
                             user.messages[item.username] && <SingleUserInMessages key={item._id} item={item} selectedUser={selectedUser} setSelectedUser={setSelectedUser}/>
                         )
+                        :
+                        <div className='white-text'>No messages. Message someone!</div>
                     }
                 </div>
                 <div className='flex-4'>
