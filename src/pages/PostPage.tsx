@@ -27,7 +27,7 @@ const PostPage = () => {
                             <SinglePost key={item._id} post={item}/>
                         )}
                     </div>
-                    : <div className='white-text d-flex justify-content-center'>No posts yet</div>
+                    : <div className='white-text p-5'>No posts yet</div>
                 }
             </div>
         </div>

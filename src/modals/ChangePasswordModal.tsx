@@ -26,6 +26,7 @@ const ChangePasswordModal = ({setIsPasswordBeingChanged}: props) => {
         if (!data.error){
             setSuccess(data.message)
             setError('')
+            setIsPasswordBeingChanged(false)
         }else{
             setError(data.message)
             setSuccess('')

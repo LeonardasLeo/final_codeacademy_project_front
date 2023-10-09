@@ -27,6 +27,7 @@ const MessageModal = ({to, setIsMessage}: props) => {
             emitSendMessage(roomName, user, to)
             setSuccess(response.message)
             setError('')
+            setIsMessage(false)
             messageRef.current.value = ''
         }else{
             setError(response.message)

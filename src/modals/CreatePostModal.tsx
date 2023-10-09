@@ -29,6 +29,7 @@ const CreatePostModal = ({setIsCreatePost}: props) => {
         if (!response.error){
             emitPostInteraction()
             dispatch(updateAllPosts(response.data))
+            setIsCreatePost(false)
         }else{
             setError(response.message)
         }

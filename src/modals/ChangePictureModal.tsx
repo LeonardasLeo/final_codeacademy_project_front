@@ -26,6 +26,7 @@ const ChangePictureModal = ({setIsPictureBeingChanged}: props) => {
             dispatch(updateUser(data.data))
             emitProfilePicChange()
             setSuccess(data.message)
+            setIsPictureBeingChanged(false)
             setError('')
         }else{
             setError(data.message)

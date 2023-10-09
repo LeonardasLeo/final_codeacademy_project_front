@@ -139,7 +139,6 @@ body input {
   width: 100%;
   object-fit: cover;
   object-position: center;
-  border-radius: 8px;
 }
 
 .send-message-from-post {
