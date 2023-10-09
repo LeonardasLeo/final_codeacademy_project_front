@@ -9,6 +9,7 @@
   --white: #FFFFFF;
   --white-text: #FFFFFF;
   --red: #FF0000;
+  --darker-red: #bd0000;
   --green: #008000;
   --small-font: 11px;
 }
@@ -130,9 +131,18 @@ body input {
   background-color: var(--light-gray);
   border-radius: 8px;
   cursor: pointer;
+  position: relative;
 }
 .post .post-date-display {
   font-size: var(--small-font);
+}
+
+.delete-post-button {
+  color: var(--red);
+}
+
+.delete-post-button:hover {
+  color: var(--darker-red);
 }
 
 .post-image {
