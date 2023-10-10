@@ -1,21 +1,20 @@
-:root{
-  --blue: #4040fa;
-  --darker-blue: #3131bb;
-  --lighter-black: #151515;
-  --gray: #808080;
-  --light-gray: #cecece;
-  --dark-gray: #111111;
-  --black: #000000;
-  --white: #FFFFFF;
-  --white-text: #FFFFFF;
-  --red: #FF0000;
-  --darker-red: #bd0000;
-  --green: #008000;
-  --small-font: 11px;
-}
+$blue: #4040fa;
+$darker-blue: #3131bb;
+$lighter-black: #151515;
+$gray: #808080;
+$light-gray: #cecece;
+$dark-gray: #111111;
+$black: #000000;
+$white: #FFFFFF;
+$white-text: #FFFFFF;
+$red: #FF0000;
+$darker-red: #bd0000;
+$green: #008000;
+$small-font: 11px;
+
 
 body{
-  background-color: var(--dark-gray);
+  background-color: $dark-gray;
   font-family: "Carlito", serif;
   input {
     border: none;
@@ -26,19 +25,19 @@ body{
 }
 
 .blue-text{
-  color: var(--blue)
+  color: $blue
 }
 
 .white-text{
-  color: var(--white-text);
+  color: $white-text;
 }
 
 .error{
-  color: var(--red)
+  color: $red
 }
 
 .success{
-  color: var(--green)
+  color: $green
 }
 
 
@@ -47,28 +46,28 @@ body{
 }
 
 .active-nav-button{
-  background-color: var(--blue);
+  background-color: $blue;
   padding: 10px;
-  color: var(--white-white);
+  color: $white-text;
   cursor: pointer;
 }
 
 .nav-button, .logout, .username-display{
   transition: 0.3s;
-  color: var(--white-white);
+  color: $white-text;
   padding: 10px;
 }
 
 .nav-button:hover, .logout:hover{
-  background-color: var(--lighter-black);
+  background-color: $lighter-black;
   cursor: pointer;
 }
 
 .navbar-custom{
   display: flex;
   justify-content: space-between;
-  background-color: var(--black);
-  color: var(--white-text);
+  background-color: $black;
+  color: $white-text;
 }
 
 .profile-pic{
@@ -103,7 +102,7 @@ body{
   z-index: 1;
   div:first-of-type{
     // for the close button of modals
-    color: var(--black)
+    color: $black
   }
 }
 
@@ -115,7 +114,7 @@ body{
 
 .reaction:hover{
   cursor: pointer;
-  color: var(--gray);
+  color: $gray;
 }
 
 .events-none{
@@ -126,26 +125,26 @@ body{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: var(--white-text);
+  color: $white-text;
 }
 
 .post{
-  background-color: var(--light-gray);
+  background-color: $light-gray;
   border-radius: 8px;
   cursor: pointer;
   // for post delete button
   position: relative;
   .post-date-display{
-    font-size: var(--small-font);
+    font-size: $small-font;
   }
 }
 
 .delete-post-button{
-  color: var(--red);
+  color: $red;
 }
 
 .delete-post-button:hover{
-  color: var(--darker-red);
+  color: $darker-red;
 }
 
 .post-image{
@@ -166,10 +165,10 @@ body{
 }
 
 .default-button{
-  background-color: var(--blue);
+  background-color: $blue;
   border-radius: 10px;
   padding: 7px;
-  color: var(--white-text);
+  color: $white-text;
   cursor: pointer;
   transition: 0.3s;
   text-align: center;
@@ -177,7 +176,7 @@ body{
 
 .default-button:hover{
   transition: 0.3s;
-  background-color: var(--darker-blue);
+  background-color: $darker-blue;
 }
 
 .user-card{
@@ -187,7 +186,7 @@ body{
   height: 100px;
   width: 100%;
   padding: 20px;
-  background-color: var(--light-gray);
+  background-color: $light-gray;
   border-radius: 10px;
   img{
     height: 80px;
@@ -199,8 +198,8 @@ body{
 }
 
 .selected-user-card{
-  background-color: var(--blue);
-  color: var(--white-text);
+  background-color: $blue;
+  color: $white-text;
 }
 
 .close-btn{
@@ -208,17 +207,17 @@ body{
 }
 
 .message{
-  background-color: var(--light-gray);
+  background-color: $light-gray;
   padding: 5px 10px;
   border-radius: 10px;
   width: fit-content;
   div:first-of-type{
-    font-size: var(--small-font);
+    font-size: $small-font;
   }
 }
 
 .message-display{
-  background-color: var(--gray);
+  background-color: $gray;
   padding: 10px;
   border-radius: 10px 10px 0 0;
   height: 80vh;
@@ -229,7 +228,7 @@ body{
   display: flex;
   flex-direction: column;
   height: 350px;
-  background-color: var(--gray);
+  background-color: $gray;
   border-radius: 10px 10px 0 0;
   overflow: auto;
   padding: 10px;
@@ -248,17 +247,17 @@ body{
 }
 
 .comment{
-  background-color: var(--light-gray);
+  background-color: $light-gray;
   padding: 10px;
   border-radius: 10px;
   .name-and-timestamp{
     display: flex;
     gap: 5px;
-    font-size: var(--small-font);
+    font-size: $small-font;
   }
   .comment-interaction-display{
     display: flex;
-    font-size: var(--small-font);
+    font-size: $small-font;
     gap: 10px;
   }
 }
@@ -269,21 +268,21 @@ body{
 
 .comment-container::-webkit-scrollbar-thumb{
   border-radius: 10px;
-  background: var(--black);
+  background: $black;
 }
 
 .single-post-like-display{
   display: flex;
   gap: 10px;
   align-items: center;
-  color: var(--white-text);
+  color: $white-text;
   .default-button{
     width: 100%;
   }
 }
 
 .single-post-title{
-  color: var(--white-text);
+  color: $white-text;
   font-size: 30px;
 }
 
@@ -303,7 +302,7 @@ body{
 }
 
 .message-display::-webkit-scrollbar-thumb{
-  background: var(--black);
+  background: $black;
   border-radius: 10px;
 }
 
@@ -313,7 +312,7 @@ body{
     width: 100%;
     border: none;
     outline: none;
-    background-color: var(--white);
+    background-color: $white;
     border-radius: 0 0 0 10px;
     padding: 10px;
   }
@@ -321,14 +320,14 @@ body{
 
 .send-button{
   border-radius: 0 0 10px 0;
-  background-color: var(--blue);
+  background-color: $blue;
   border: none;
   color: var(--white-text);
   padding: 0 20px 0 20px;
 }
 
 .select-component, .custom-dropdown{
-  background-color: var(--gray);
+  background-color: $gray;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -350,7 +349,7 @@ body{
     border-radius: 10px 10px 0 0;
   }
   div:hover{
-    background-color: var(--blue);
+    background-color: $blue;
   }
   div:last-of-type:hover{
     border-radius: 0 0 10px 10px;
