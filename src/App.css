@@ -312,6 +312,7 @@ body input {
   background-color: #808080;
   border-radius: 10px;
   cursor: pointer;
+  z-index: 1;
 }
 
 .select-component {
@@ -344,6 +345,4 @@ body input {
 
 .flex-4 {
   flex: 4;
-}
-
-/*# sourceMappingURL=App.css.map */
+}/*# sourceMappingURL=App.css.map */
