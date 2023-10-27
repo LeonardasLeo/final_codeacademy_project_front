@@ -330,6 +330,7 @@ body{
   background-color: $gray;
   border-radius: 10px;
   cursor: pointer;
+  z-index: 1;
 }
 
 .select-component{
